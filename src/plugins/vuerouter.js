@@ -1,11 +1,41 @@
 import {createRouter, createWebHashHistory} from 'vue-router'
-
-const Home = { template: '<div>Home</div>' }
-const About = { template: '<div>About</div>' }
+import Home from '../views/Home.vue'
+import Login from '../views/Login.vue'
+import ViewPost from '../views/View.vue'
+import Create from "../views/Create.vue"
+import Reply from "../views/Reply.vue"
 
 const routes = [
-    { path: '/', component: Home },
-    { path: '/about', component: About },
+    {
+        path: '/',
+        name: 'Home',
+        component: Home
+    },
+    {
+        path: '/login',
+        name: 'Login',
+        component: Login
+    },
+    {
+        path: '/view/:id',
+        name: 'View Post',
+        component: ViewPost
+    },
+    {
+        path: '/create',
+        name: 'Create Post',
+        component: Create
+    },
+    {
+        path: '/reply/:id/',
+        name: 'Reply post',
+        component: Reply
+    },
+    {
+        path: '/reply/:id/:subId',
+        name: 'Reply comment',
+        component: Reply
+    }
 ]
 
 const router = createRouter({
