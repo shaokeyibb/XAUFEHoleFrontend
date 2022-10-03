@@ -29,6 +29,7 @@
 <script setup>
 import router from "../plugins/vuerouter.js";
 import {onMounted} from "vue";
+import {backendApiUrl} from "../configurations/config.ts";
 
 const emit = defineEmits(['modifytitle', 'modifyicon', 'modifyactions'])
 
@@ -41,7 +42,7 @@ onMounted(() => {
 const auth_methods = [
   {
     name: "西安财经大学统一身份认证",
-    href: "https://cas.xaufe.edu.cn/login?service=http://localhost/api/casAuth?redirectUrl=http://127.0.0.1:5173"
+    href: "https://cas.xaufe.edu.cn/login?service=" + backendApiUrl + "/casAuth?redirectUrl=http://127.0.0.1:5173"
   }
 ]
 
