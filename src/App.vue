@@ -2,10 +2,13 @@
   <v-app>
     <app-bar :title="title" :icon="icon" :actions="actions"></app-bar>
     <v-main>
-      <v-banner lines="one" icon="mdi-alert-circle">
+      <v-banner :lines="1" icon="mdi-alert-circle" v-if="!hasReadCookieNotice">
         <v-banner-text>
-          测试中界面，不代表最终品质
+          本站点使用 Cookie 或其他类似技术以增强您的使用体验，继续使用本网站即代表您同意我们使用 Cookie 或其他类似技术。
         </v-banner-text>
+        <template v-slot:actions>
+          <v-btn @click="handleClickBannerDismiss">Dismiss</v-btn>
+        </template>
       </v-banner>
       <v-container fluid>
         <router-view @modifytitle="handleModifyTitle" @modifyicon="handleModifyIcon"
@@ -28,6 +31,7 @@ const actions = ref([])
 
 function handleModifyTitle(newTitle) {
   title.value = newTitle
+  document.title = newTitle===undefined ? 'XAUFEHole - 西财树洞' : newTitle + " | XAUFEHole - 西财树洞"
 }
 
 function handleModifyIcon(newIcon) {
@@ -36,6 +40,13 @@ function handleModifyIcon(newIcon) {
 
 function handleModifyActions(newActions) {
   actions.value = newActions
+}
+
+const hasReadCookieNotice = ref(localStorage.getItem("hasReadCookieNotice") === "true")
+
+function handleClickBannerDismiss() {
+  hasReadCookieNotice.value = true
+  localStorage.setItem("hasReadCookieNotice", "true")
 }
 
 </script>

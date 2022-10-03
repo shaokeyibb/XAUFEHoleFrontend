@@ -1,4 +1,9 @@
 <template>
+  <v-alert type="warning">在登录前，请详细阅读我们的
+    <router-link to="/policy">隐私政策和服务条款</router-link>
+    ，了解我们对个人信息的收集、使用方式，以便您更好地了解我们的服务并作出适当的选择。
+  </v-alert>
+  <v-spacer class="my-3"></v-spacer>
   <div class="page">
     <v-spacer class="flex-grow-1"></v-spacer>
     <div class="login_panel">

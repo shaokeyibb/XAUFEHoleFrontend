@@ -4,6 +4,7 @@ import Login from '../views/Login.vue'
 import ViewPost from '../views/View.vue'
 import Create from "../views/Create.vue"
 import Reply from "../views/Reply.vue"
+import Policy from "../views/Policy.vue"
 
 const routes = [
     {
@@ -35,6 +36,11 @@ const routes = [
         path: '/reply/:id/:subId',
         name: 'Reply comment',
         component: Reply
+    },
+    {
+        path: '/policy',
+        name: 'Privacy Policy and User Agreement',
+        component: Policy
     }
 ]
 
