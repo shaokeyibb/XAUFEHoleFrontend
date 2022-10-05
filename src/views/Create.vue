@@ -13,6 +13,8 @@ import Editor from "../components/create/Editor.vue";
 import {onMounted, ref, watch} from "vue";
 import {useRouter} from "vue-router";
 import TagSelector from "../components/create/TagSelector.vue";
+import {fetchX} from "../service/frontend.ts";
+import {backendApiUrl} from "../configurations/config.ts";
 
 const router = useRouter()
 const isSending = ref(false)
@@ -49,7 +51,28 @@ function handleClickLaunchBtn() {
   if (isSending.value) return;
   if (error.value) return;
   isSending.value = true
-  //TODO
+  fetchX(backendApiUrl + "/post/create", {
+    method: "POST",
+    body: JSON.stringify({
+      content: content.value,
+      tags: selectedTags.value
+    }),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }).then((res) => {
+    if (res.status === 200) {
+      router.push("/?snakebar=发布成功")
+    } else {
+      error.value = true
+      errorMessage.value = "发送失败"
+    }
+  }).catch(() => {
+    error.value = true
+    errorMessage.value = "发送失败"
+  }).finally(() => {
+    isSending.value = false
+  })
 }
 
 const emit = defineEmits(['modifytitle', 'modifyicon', 'modifyactions'])

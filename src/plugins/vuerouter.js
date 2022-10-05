@@ -5,6 +5,8 @@ import ViewPost from '../views/View.vue'
 import Create from "../views/Create.vue"
 import Reply from "../views/Reply.vue"
 import Policy from "../views/Policy.vue"
+import Profile from "../views/Profile.vue"
+import Error from "../views/Error.vue"
 
 const routes = [
     {
@@ -41,6 +43,16 @@ const routes = [
         path: '/policy',
         name: 'Privacy Policy and User Agreement',
         component: Policy
+    },
+    {
+        path: '/profile',
+        name: 'My Profile',
+        component: Profile
+    },
+    {
+        path: '/error',
+        name: 'Error',
+        component: Error
     }
 ]
 

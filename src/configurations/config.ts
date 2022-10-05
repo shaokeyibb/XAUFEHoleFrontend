@@ -1,1 +1,4 @@
-export const backendApiUrl: string = 'http://localhost:5000/api';
+export const backendApiUrl: string = 'http://localhostwebtest.com/api';
+export const frontendUrl:string = 'http://localhostwebtest.com'
+// export const backendApiUrl: string = 'http://hole.xctra.temp.minecraft.kim/api';
+// export const frontendUrl:string = 'http://hole.xctra.temp.minecraft.kim'

@@ -7,6 +7,8 @@
 import {onMounted, ref, watch} from "vue";
 import {onBeforeRouteUpdate, useRoute, useRouter} from "vue-router";
 import Editor from "../components/create/Editor.vue";
+import {backendApiUrl} from "../configurations/config.ts";
+import {fetchX} from "../service/frontend.ts";
 
 const router = useRouter()
 const route = useRoute()
@@ -44,7 +46,28 @@ function handleClickLaunchBtn() {
   if (isSending.value) return;
   if (error.value) return;
   isSending.value = true
-  //TODO
+  fetchX(backendApiUrl + "/post/reply", {
+    method: "PUT",
+    body: JSON.stringify({
+      id: route.params.id,
+      content: content.value
+    }),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }).then((res) => {
+    if (res.status === 200) {
+      router.push("/view/" + route.params.id)
+    } else {
+      error.value = true
+      errorMessage.value = "发送失败"
+    }
+  }).catch(() => {
+    error.value = true
+    errorMessage.value = "发送失败"
+  }).finally(() => {
+    isSending.value = false
+  })
 }
 
 const emit = defineEmits(['modifytitle', 'modifyicon', 'modifyactions'])

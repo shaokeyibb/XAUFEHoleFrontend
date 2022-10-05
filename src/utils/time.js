@@ -1,7 +1,7 @@
 // timestamp within a second
 export function toReadableRelativeTime(timestamp) {
     const now = new Date();
-    const date = new Date(timestamp * 1000);
+    const date = new Date(timestamp);
     const diff = now.getTime() - date.getTime();
     const seconds = Math.floor(diff / 1000);
     const minutes = Math.floor(seconds / 60);

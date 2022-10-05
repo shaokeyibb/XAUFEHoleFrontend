@@ -2,7 +2,7 @@
   <v-app>
     <app-bar :title="title" :icon="icon" :actions="actions"></app-bar>
     <v-main>
-      <v-banner :lines="1" icon="mdi-alert-circle" v-if="!hasReadCookieNotice">
+      <v-banner lines="1" icon="mdi-alert-circle" v-if="!hasReadCookieNotice">
         <v-banner-text>
           本站点使用 Cookie 或其他类似技术以增强您的使用体验，继续使用本网站即代表您同意我们使用 Cookie 或其他类似技术。
         </v-banner-text>

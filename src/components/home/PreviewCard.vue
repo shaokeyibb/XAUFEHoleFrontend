@@ -59,7 +59,7 @@
 import {error, secondary} from '../../themes/color.js'
 import {computed} from "vue";
 import {toReadableRelativeTime} from "../../utils/time.js";
-import PostCardComment from "./PostCardComment.vue";
+import PostCardComment from "./PreviewCardComment.vue";
 import router from "../../plugins/vuerouter.js";
 
 const props = defineProps({
@@ -70,8 +70,10 @@ const props = defineProps({
 })
 
 function generateOwnedComment(comment) {
-  comment["post_id"] = props.data.id
-  return comment;
+  return {
+    post_id: props.data.id,
+    ...comment
+  }
 }
 
 const readableTime = computed(() => {

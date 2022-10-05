@@ -1,5 +1,5 @@
 <template>
-  <div class="post" v-for="post in test_view_data.posts" :id="post.id ? post.id : undefined">
+  <div class="post" v-for="post in view_data.posts" :id="post.id ? post.id : undefined">
     <!--The id anchor may have broken by unknown issue-->
     <view-card :data="generateOwnedComment(post)" @clickReply="handleClickReply"></view-card>
     <v-spacer class="mb-3"></v-spacer>
@@ -9,7 +9,10 @@
 <script setup>
 import {onBeforeRouteUpdate, useRoute, useRouter} from "vue-router";
 import ViewCard from "../components/view/ViewCard.vue";
-import {onMounted, reactive, ref} from "vue";
+import {onMounted, reactive} from "vue";
+import useAsyncComputed from "../utils/use-async-computed.ts";
+import {fetchX} from "../service/frontend.ts";
+import {backendApiUrl} from "../configurations/config.ts";
 
 const router = useRouter()
 const route = useRoute()
@@ -45,43 +48,52 @@ function handleClickReply(subId) {
 }
 
 function generateOwnedComment(comment) {
-  comment["post_id"] = test_view_data.value.id
-  return comment;
+  return {
+    post_id: view_data.value.id,
+    ...comment
+  }
 }
 
 onMounted(() => {
   initial(route.params.id)
 })
 
-const test_view_data = ref(reactive({
-  id: 1,
-  posts: [
-    {
-      id: 0, // main post has no comment id
-      poster_index: -1,
-      post_time: 1664551473,
-      content: "# 欢迎来到西财树洞！",
-      attributes: ["置顶"]
-    },
-    {
-      id: 1, // main post has no comment id
-      poster_index: 0,
-      post_time: 1664553033,
-      content: "火钳刘明"
-    },
-    {
-      id: 2, // main post has no comment id
-      poster_index: 0,
-      post_time: 1664553033,
-      content: "火钳刘明"
-    },
-    {
-      id: 3, // main post has no comment id
-      poster_index: 0,
-      post_time: 1664553033,
-      content: "火钳刘明"
-    }
-  ]
+// const view_data = ref(reactive({
+//   id: 1,
+//   posts: [
+//     {
+//       id: 0, // main post has no comment id
+//       poster_index: -1,
+//       post_time: 1664551473,
+//       content: "# 欢迎来到西财树洞！",
+//       attributes: ["置顶"]
+//     },
+//     {
+//       id: 1,
+//       poster_index: 0,
+//       post_time: 1664553033,
+//       content: "火钳刘明"
+//     },
+//     {
+//       id: 2,
+//       poster_index: 1,
+//       post_time: 1664553033,
+//       content: "火钳刘明"
+//     },
+//     {
+//       id: 3,
+//       poster_index: 2,
+//       post_time: 1664553033,
+//       content: "火钳刘明"
+//     }
+//   ]
+// }))
+
+const [view_data] = useAsyncComputed(() => {
+  return fetchX(backendApiUrl + "/post/view/" + route.params.id).then(res => reactive(res.json()))
+}, reactive({
+  id: 0,
+  posts: []
 }))
 
 onBeforeRouteUpdate(async (to, from) => {
