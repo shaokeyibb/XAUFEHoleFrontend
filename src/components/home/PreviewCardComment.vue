@@ -1,9 +1,9 @@
 <template>
   <div class="my-2">
     <div class="title">
-      <span class="comment-title">{{ getFullPosterNameByIndex(this.data.poster_index) }} 于 {{ toReadableRelativeTime(data.post_time) }} 回复：</span>
+      <span class="comment-title">{{ getFullPosterNameByIndex(data.poster_index) }} 于 {{ toReadableRelativeTime(data.post_time) }} 回复：</span>
       <v-spacer class="flex-grow-1"></v-spacer>
-      <span class="comment-id">#{{ this.data.post_id }}-{{ this.data.id }}</span>
+      <span class="comment-id">#{{ data.post_id }}-{{ data.id }}</span>
     </div>
     <div class="comment-content">
       <vue-showdown :markdown="data.content" :options="{headerLevelStart: 3}"></vue-showdown>
