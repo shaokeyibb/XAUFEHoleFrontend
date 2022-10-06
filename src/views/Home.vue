@@ -23,7 +23,15 @@
   </v-snackbar>
 </template>
 
-<script>
+<script setup>
+import {secondary, unimportant} from '../themes/color.js'
+import FabBtn from "../components/FabBtn.vue";
+import {onMounted, onUnmounted, reactive, ref, watch} from "vue";
+import {getQueryVariable, isInViewport} from "../utils/frontend.js";
+import useAsyncComputed from "../utils/use-async-computed.ts";
+import {fetchX} from "../service/frontend.ts";
+import {backendApiUrl} from "../configurations/config.ts";
+import PreviewCard from "../components/home/PreviewCard.vue";
 import {useRouter} from "vue-router";
 
 const router = useRouter();
@@ -35,19 +43,6 @@ function handleClickAccountBtn() {
 function handleClickProfileBtn() {
   router.push('/profile')
 }
-</script>
-
-<script setup>
-import {secondary, unimportant} from '../themes/color.js'
-import FabBtn from "../components/FabBtn.vue";
-import {onMounted, onUnmounted, reactive, ref, watch} from "vue";
-import {getQueryVariable, isInViewport} from "../utils/frontend.js";
-import useAsyncComputed from "../utils/use-async-computed.ts";
-import {fetchX} from "../service/frontend.ts";
-import {backendApiUrl} from "../configurations/config.ts";
-import PreviewCard from "../components/home/PreviewCard.vue";
-
-const router = useRouter()
 
 const emit = defineEmits(['modifytitle', 'modifyicon', 'modifyactions'])
 
