@@ -1,4 +1,4 @@
-import router from '../plugins/vuerouter'
+import router from '../plugins/vuerouter.js'
 
 function handleResponseBody(response: Response) {
     switch (response.status) {

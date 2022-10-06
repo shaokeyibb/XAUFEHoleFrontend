@@ -58,12 +58,14 @@
 </template>
 
 <script setup>
-import router from "../plugins/vuerouter.js";
 import {computed, onMounted, reactive, ref, watch} from "vue";
 import {backendApiUrl, frontendUrl} from "../configurations/config.ts";
 import {primary, secondary} from "../themes/color.js";
 import useAsyncComputed from "../utils/use-async-computed.ts";
 import {fetchX} from "../service/frontend.ts";
+import {useRouter} from "vue-router";
+
+const router = useRouter();
 
 const emit = defineEmits(['modifytitle', 'modifyicon', 'modifyactions'])
 

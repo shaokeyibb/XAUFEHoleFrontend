@@ -59,8 +59,10 @@
 import {error, secondary} from '../../themes/color.js'
 import {computed} from "vue";
 import {toReadableRelativeTime} from "../../utils/time.js";
-import router from "../../plugins/vuerouter.js";
 import PreviewCardComment from "./PreviewCardComment.vue";
+import {useRouter} from "vue-router";
+
+const router = useRouter()
 
 const props = defineProps({
   data: {

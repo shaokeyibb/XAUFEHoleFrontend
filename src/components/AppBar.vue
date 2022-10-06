@@ -26,7 +26,9 @@
 
 <script setup>
 import {primary, textLight} from '../themes/color.js'
-import router from "../plugins/vuerouter.js";
+import {useRouter} from "vue-router";
+
+const router = useRouter();
 
 defineProps({
   title: {

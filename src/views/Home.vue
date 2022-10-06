@@ -24,7 +24,9 @@
 </template>
 
 <script>
-import router from "../plugins/vuerouter.js";
+import {useRouter} from "vue-router";
+
+const router = useRouter();
 
 function handleClickAccountBtn() {
   router.push('/login')
@@ -39,7 +41,6 @@ function handleClickProfileBtn() {
 import {secondary, unimportant} from '../themes/color.js'
 import FabBtn from "../components/FabBtn.vue";
 import {onMounted, onUnmounted, reactive, ref, watch} from "vue";
-import {useRouter} from "vue-router";
 import {getQueryVariable, isInViewport} from "../utils/frontend.js";
 import useAsyncComputed from "../utils/use-async-computed.ts";
 import {fetchX} from "../service/frontend.ts";
@@ -96,14 +97,14 @@ function handleClickFabBtn() {
 
 const page = ref(0)
 
-const preview_data = ref([])
+const preview_data = reactive([])
 const [current_page_data] = useAsyncComputed(() => fetchX(backendApiUrl + "/post/list?page=" + page.value).then(res => res.json()), undefined)
 
 const isLoading = ref(false)
 
 watch(current_page_data, (newVal) => {
   if (newVal && newVal.length !== 0) {
-    preview_data.value.push(...newVal)
+    preview_data.push(...newVal)
     isLoading.value = false
   }
 })
