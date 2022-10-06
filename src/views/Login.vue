@@ -91,7 +91,7 @@ const requireRegistrationCode = ref(false)
 
 const authMethods = [
   {
-    name: "西安财经大学统一身份认证",
+    name: "西安财经大学统一身份认证（不可用）",
     href: "https://cas.xaufe.edu.cn/login?service=" + encodeURIComponent(backendApiUrl) + "/auth/casAuth?redirectUrl=" + btoa(frontendUrl + "/#/?snakebar=" + encodeURIComponent("登录成功，欢迎回来！")),
     method: "DIRECT",
     additionalParams: [
@@ -114,7 +114,7 @@ const authMethods = [
     ]
   },
   {
-    name: "西安财经大学教育邮箱登录",
+    name: "西安财经大学教育邮箱登录（推荐）",
     href: backendApiUrl + "/auth/emailAuth",
     method: "POST",
     additionalParams: [
@@ -159,7 +159,7 @@ const authMethods = [
         required: ref(true),
         default: false,
         label: "注册账号模式",
-        detail: "如果您还没有登录过西财树洞，则请选中此项以使用您的输入的账号和密码注册一个账号。"
+        detail: "如果您还没有登录过西财树洞，则请选中此项以使用您输入的账号和密码注册一个账号。"
       }
     ]
   }
