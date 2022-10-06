@@ -1,7 +1,9 @@
 <template>
   <div class="my-2">
     <div class="title">
-      <span class="comment-title">{{ getFullPosterNameByIndex(data.poster_index) }} 于 {{ toReadableRelativeTime(data.post_time) }} 回复：</span>
+      <span class="comment-title">{{
+          getFullPosterNameByIndex(data.poster_index)
+        }} 于 {{ toReadableRelativeTime(data.post_time) }} 回复：</span>
       <v-spacer class="flex-grow-1"></v-spacer>
       <span class="comment-id">#{{ data.post_id }}-{{ data.id }}</span>
     </div>
@@ -46,5 +48,10 @@ defineProps({
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.comment-content >>> img {
+  max-width: 100%;
+  max-height: 100%;
 }
 </style>

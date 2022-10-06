@@ -134,6 +134,11 @@ function handleClickReply() {
   font-size: 16px;
 }
 
+.card-text-main >>> img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
 .card-text-comments-content {
   padding-left: 16px;
   padding-right: 16px;
