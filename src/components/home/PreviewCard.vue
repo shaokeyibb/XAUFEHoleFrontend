@@ -30,7 +30,7 @@
       <div class="card-text-comments" v-if="data.comments.length!==0" v-for="comment in data.comments">
         <v-divider class="mx-3"></v-divider>
         <div class="card-text-comments-content">
-          <post-card-comment :data="generateOwnedComment(comment)"></post-card-comment>
+          <preview-card-comment :data="generateOwnedComment(comment)"></preview-card-comment>
         </div>
       </div>
       <v-divider class="mx-3"></v-divider>
@@ -59,8 +59,8 @@
 import {error, secondary} from '../../themes/color.js'
 import {computed} from "vue";
 import {toReadableRelativeTime} from "../../utils/time.js";
-import PostCardComment from "./PreviewCardComment.vue";
 import router from "../../plugins/vuerouter.js";
+import PreviewCardComment from "./PreviewCardComment.vue";
 
 const props = defineProps({
   data: {

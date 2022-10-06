@@ -1,6 +1,6 @@
 <template>
   <div v-for="data in preview_data">
-    <post-card :data="data"></post-card>
+    <preview-card :data="data"></preview-card>
     <v-spacer class="mb-3"></v-spacer>
   </div>
   <div class="no-more-post" id="no-more-post">
@@ -38,13 +38,13 @@ function handleClickProfileBtn() {
 <script setup>
 import {secondary, unimportant} from '../themes/color.js'
 import FabBtn from "../components/FabBtn.vue";
-import PostCard from "../components/home/PreviewCard.vue";
 import {onMounted, onUnmounted, reactive, ref, watch} from "vue";
 import {useRouter} from "vue-router";
 import {getQueryVariable, isInViewport} from "../utils/frontend.js";
 import useAsyncComputed from "../utils/use-async-computed.ts";
 import {fetchX} from "../service/frontend.ts";
 import {backendApiUrl} from "../configurations/config.ts";
+import PreviewCard from "../components/home/PreviewCard.vue";
 
 const router = useRouter()
 
