@@ -1,6 +1,6 @@
 <template>
   <tag-selector :disabled="isSending" :max-tags="2"
-                :tags="['日常', '生活', '科技','新人报到', '学习', '校园', '娱乐', '情感', '其他']"
+                :tags="['日常', '生活', '学习']"
                 v-model="selectedTags">
   </tag-selector>
   <v-spacer class="my-3"></v-spacer>
