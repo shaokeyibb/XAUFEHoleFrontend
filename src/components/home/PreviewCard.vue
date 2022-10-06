@@ -41,7 +41,7 @@
             data.reply_count
           }})
         </v-btn>
-        <v-btn prepend-icon="mdi-share-variant">分享</v-btn>
+        <v-btn prepend-icon="mdi-share-variant" @click="handleClickShare">分享</v-btn>
         <v-btn prepend-icon="mdi-star-plus">收藏 ({{ data.star_count }})</v-btn>
       </v-card-actions>
       <div class="actions-remain" @click="handleClickCard">
@@ -61,6 +61,7 @@ import {computed} from "vue";
 import {toReadableRelativeTime} from "../../utils/time.js";
 import PreviewCardComment from "./PreviewCardComment.vue";
 import {useRouter} from "vue-router";
+import {copyToClipboard} from "../../service/frontend.ts";
 
 const router = useRouter()
 
@@ -88,6 +89,10 @@ function handleClickCard() {
 
 function handleClickReply() {
   router.push("/reply/" + props.data.id)
+}
+
+function handleClickShare() {
+  copyToClipboard(window.location.href + "view/" + props.data.id)
 }
 
 </script>

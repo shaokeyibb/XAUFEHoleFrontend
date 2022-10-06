@@ -33,3 +33,7 @@ export function fetchX(input: RequestInfo | URL, init?: RequestInit, bypassGloba
         return response;
     })
 }
+
+export function copyToClipboard(text: string) {
+    navigator.clipboard.writeText(text).then(() => alert("内容已复制到剪贴板"))
+}
