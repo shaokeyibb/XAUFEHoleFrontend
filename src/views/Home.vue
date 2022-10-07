@@ -69,14 +69,14 @@ onMounted(() => {
   }
 })
 
-const [isLogin] = useAsyncComputed(() => {
+const [isUserLogin] = useAsyncComputed(() => {
   return fetchX(backendApiUrl + "/user/info", null, true)
       .then(res => res.json())
       .then(res => res.id !== undefined)
       .catch(() => false)
 }, false)
 
-watch(isLogin, (newVal) => {
+watch(isUserLogin, (newVal) => {
   if (newVal) {
     emit('modifyactions', [
       {

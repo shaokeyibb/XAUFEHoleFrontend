@@ -8,7 +8,7 @@ import {onMounted, ref, watch} from "vue";
 import {onBeforeRouteUpdate, useRoute, useRouter} from "vue-router";
 import Editor from "../components/create/Editor.vue";
 import {backendApiUrl} from "../configurations/config.ts";
-import {fetchX} from "../service/frontend.ts";
+import {checkUserLogin, fetchX} from "../service/frontend.ts";
 
 const router = useRouter()
 const route = useRoute()
@@ -87,6 +87,7 @@ function initial(id, subId) {
       handler: handleClickLaunchBtn
     }
   ])
+  checkUserLogin("/reply/" + route.params.id)
 }
 
 onMounted(() => {

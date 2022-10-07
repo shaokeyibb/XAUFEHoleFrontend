@@ -13,7 +13,7 @@ import Editor from "../components/create/Editor.vue";
 import {onMounted, ref, watch} from "vue";
 import {useRouter} from "vue-router";
 import TagSelector from "../components/create/TagSelector.vue";
-import {fetchX} from "../service/frontend.ts";
+import {checkUserLogin, fetchX} from "../service/frontend.ts";
 import {backendApiUrl} from "../configurations/config.ts";
 
 const router = useRouter()
@@ -91,6 +91,7 @@ onMounted(() => {
       handler: handleClickLaunchBtn
     }
   ])
+  checkUserLogin("/create")
 })
 
 </script>

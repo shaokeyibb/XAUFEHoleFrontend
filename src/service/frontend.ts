@@ -1,4 +1,6 @@
 import router from '../plugins/vuerouter.js'
+import {backendApiUrl} from "../configurations/config";
+import {nextTick} from "vue";
 
 function handleResponseBody(response: Response) {
     switch (response.status) {
@@ -36,4 +38,20 @@ export function fetchX(input: RequestInfo | URL, init?: RequestInit, bypassGloba
 
 export function copyToClipboard(text: string) {
     navigator.clipboard.writeText(text).then(() => alert("内容已复制到剪贴板"))
+}
+
+function isUserLogin() {
+    return fetchX(backendApiUrl + "/user/info", null, true)
+        .then(res => res.status === 200)
+}
+
+export function checkUserLogin(redirect?: string) {
+    isUserLogin().then(login => {
+        if (!login) {
+            nextTick(() => {
+                alert("您还尚未登录，请先登录后再进行操作")
+                router.push("/login" + (redirect ? "?redirect=" + encodeURIComponent(redirect) : ""))
+            })
+        }
+    })
 }
