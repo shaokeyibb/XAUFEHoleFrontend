@@ -64,6 +64,8 @@ onMounted(() => {
   if (getQueryVariable("snakebar") !== undefined) {
     snackbar.enable = true
     snackbar.text = decodeURIComponent(getQueryVariable("snakebar"))
+    // remove parameter of the url
+    history.replaceState(null, null, location.pathname + "#/")
   }
 })
 
