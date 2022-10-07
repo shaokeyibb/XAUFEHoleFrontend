@@ -49,6 +49,18 @@ function handleClickBannerDismiss() {
   localStorage.setItem("hasReadCookieNotice", "true")
 }
 
+// For PWA
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker
+      .register('/serviceWorker.js')
+}
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Show the prompt
+  e.prompt();
+});
+
 </script>
 
 <style>

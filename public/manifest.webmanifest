@@ -1,0 +1,18 @@
+{
+  "background_color": "white",
+  "lang": "zh",
+  "scope":"/",
+  "description": "XAUFEHole 西财树洞，一个面向西财学子的匿名树洞网站",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "icon/app_192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "name": "XAUFEHole 西财树洞",
+  "short_name": "西财树洞",
+  "start_url": "/index.html"
+}
+
