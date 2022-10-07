@@ -192,6 +192,7 @@ function handleClickLogin() {
       }
     }).then(res => {
       if (res.status === 200) {
+        refreshCaptcha("captcha");
         router.push(
             (getQueryVariable("redirect") ? decodeURIComponent(getQueryVariable("redirect")) : "/") +
             (getQueryVariable("redirect") ? "" : "?snakebar=" + encodeURIComponent("登录成功，欢迎回来！"))
