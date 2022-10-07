@@ -56,11 +56,6 @@ if ('serviceWorker' in navigator) {
       .register('/serviceWorker.js')
 }
 
-window.addEventListener('beforeinstallprompt', (e) => {
-  // Show the prompt
-  e.prompt();
-});
-
 </script>
 
 <style>
