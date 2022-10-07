@@ -50,8 +50,8 @@ defineProps({
   overflow: hidden;
 }
 
-.comment-content >>> img {
-  max-width: 100%;
-  max-height: 100%;
-}
+/*.comment-content >>> img {*/
+/*  max-width: 100%;*/
+/*  max-height: 100%;*/
+/*}*/
 </style>

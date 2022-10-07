@@ -79,10 +79,10 @@ defineEmits(['clickReply'])
   padding-bottom: 16px;
 }
 
-.card_content >>> img {
-  max-width: 100%;
-  max-height: 100%;
-}
+/*.card_content >>> img {*/
+/*  max-width: 100%;*/
+/*  max-height: 100%;*/
+/*}*/
 
 .tags-container {
   display: flex;

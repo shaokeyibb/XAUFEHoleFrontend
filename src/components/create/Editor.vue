@@ -68,8 +68,8 @@ defineEmits(['update:modelValue'])
   flex-direction: column;
 }
 
-.main-editor-preview >>> img {
-  max-width: 100%;
-  max-height: 100%;
-}
+/*.main-editor-preview >>> img {*/
+/*  max-width: 100%;*/
+/*  max-height: 100%;*/
+/*}*/
 </style>

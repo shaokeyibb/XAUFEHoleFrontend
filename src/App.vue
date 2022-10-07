@@ -31,7 +31,7 @@ const actions = ref([])
 
 function handleModifyTitle(newTitle) {
   title.value = newTitle
-  document.title = newTitle===undefined ? 'XAUFEHole - 西财树洞' : newTitle + " | XAUFEHole - 西财树洞"
+  document.title = newTitle === undefined ? 'XAUFEHole - 西财树洞' : newTitle + " | XAUFEHole - 西财树洞"
 }
 
 function handleModifyIcon(newIcon) {
@@ -87,4 +87,10 @@ window.addEventListener('beforeinstallprompt', (e) => {
 .theme-unimportant {
   color: v-bind(unimportant);
 }
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
 </style>
