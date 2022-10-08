@@ -1,6 +1,6 @@
 <template>
   <editor :loading="isSending" :disabled="isSending" :error="error" :error-message="errorMessage"
-          v-model="content" label="想对大家说点什么？"></editor>
+          v-model="content" label="想对大家说点什么？" v-model:show-image-uploader="showImageUploader"></editor>
 </template>
 
 <script setup>
@@ -18,6 +18,8 @@ const error = ref(false)
 const errorMessage = ref("")
 
 const content = ref("")
+
+const showImageUploader = ref(false)
 
 onMounted(() => {
   // check now to sync can send status
@@ -81,6 +83,13 @@ function initial(id, subId) {
     handler: () => handleClickAppbarIcon(id, subId)
   })
   emit('modifyactions', [
+    {
+      icon: "mdi-image-plus",
+      tooltip: "上传图片",
+      handler: () => {
+        showImageUploader.value = true
+      }
+    },
     {
       icon: "mdi-send",
       tooltip: "发布",

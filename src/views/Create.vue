@@ -5,7 +5,7 @@
   </tag-selector>
   <v-spacer class="my-3"></v-spacer>
   <editor :loading="isSending" :disabled="isSending" :error="error" :error-message="errorMessage"
-          v-model="content"></editor>
+          v-model="content" v-model:show-image-uploader="showImageUploader"></editor>
 </template>
 
 <script setup>
@@ -23,6 +23,8 @@ const errorMessage = ref("")
 
 const content = ref("")
 const selectedTags = ref([])
+
+const showImageUploader = ref(false)
 
 onMounted(() => {
   // check now to sync can send status
@@ -85,6 +87,13 @@ onMounted(() => {
     handler: handleClickAppbarIcon
   })
   emit('modifyactions', [
+    {
+      icon: "mdi-image-plus",
+      tooltip: "上传图片",
+      handler: () => {
+        showImageUploader.value = true
+      }
+    },
     {
       icon: "mdi-send",
       tooltip: "发布",
