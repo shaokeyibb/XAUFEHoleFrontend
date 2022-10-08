@@ -23,9 +23,15 @@
         <v-card-subtitle>发布于 {{ readableTime }}</v-card-subtitle>
       </v-card-item>
       <v-card-text>
-        <div class="card-text-main">
-          <vue-showdown :markdown="data.preview" :options="{headerLevelStart: 3}"></vue-showdown>
-        </div>
+        <template v-if="data.tags.find(it=>it==='NSFW')">
+          <v-icon :color="unimportant">mdi-information</v-icon>
+          <span class="theme-unimportant">这篇树洞已被发布者或管理员标记为“不适宜在工作期间查看（NSFW）”，因此其首页预览现在已被隐藏。</span>
+        </template>
+        <template v-else>
+          <div class="card-text-main">
+            <vue-showdown :markdown="data.preview" :options="{headerLevelStart: 3}"></vue-showdown>
+          </div>
+        </template>
       </v-card-text>
       <div class="card-text-comments" v-if="data.comments.length!==0" v-for="comment in data.comments">
         <v-divider class="mx-3"></v-divider>
@@ -56,7 +62,7 @@
 </template>
 
 <script setup>
-import {error, secondary} from '../../themes/color.js'
+import {error, secondary, unimportant} from '../../themes/color.js'
 import {computed} from "vue";
 import {toReadableRelativeTime} from "../../utils/time.js";
 import PreviewCardComment from "./PreviewCardComment.vue";
