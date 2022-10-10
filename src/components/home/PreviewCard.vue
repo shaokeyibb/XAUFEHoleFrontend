@@ -23,7 +23,7 @@
         <v-card-subtitle>发布于 {{ readableTime }}</v-card-subtitle>
       </v-card-item>
       <v-card-text>
-        <template v-if="data.tags.find(it=>it==='NSFW')">
+        <template v-if="data.attributes.find(it=>it==='NSFW')">
           <v-icon :color="unimportant">mdi-information</v-icon>
           <span class="theme-unimportant">这篇树洞已被发布者或管理员标记为“不适宜在工作期间查看（NSFW）”，因此其首页预览现在已被隐藏。</span>
         </template>

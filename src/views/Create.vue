@@ -6,6 +6,11 @@
   <v-spacer class="my-3"></v-spacer>
   <editor :loading="isSending" :disabled="isSending" :error="error" :error-message="errorMessage"
           v-model="content" v-model:show-image-uploader="showImageUploader"></editor>
+  <v-switch v-model="isNSFW" :disabled="isSending"
+            :color="secondary"
+            label="将这篇树洞标记为 NSFW"
+            messages="是否将这篇树洞标记为“不适宜在工作期间查看（NSFW）”？这将使得这篇树洞在首页不会显示文章预览。对于一些不适宜的内容，我们建议您可以选择标记为 NSFW。"
+  ></v-switch>
 </template>
 
 <script setup>
@@ -15,6 +20,7 @@ import {useRouter} from "vue-router";
 import TagSelector from "../components/create/TagSelector.vue";
 import {checkUserLogin, fetchX} from "../service/frontend.ts";
 import {backendApiUrl} from "../configurations/config.ts";
+import {secondary} from "../themes/color.js";
 
 const router = useRouter()
 const isSending = ref(false)
@@ -23,6 +29,8 @@ const errorMessage = ref("")
 
 const content = ref("")
 const selectedTags = ref([])
+
+const isNSFW = ref(false)
 
 const showImageUploader = ref(false)
 
@@ -57,7 +65,8 @@ function handleClickLaunchBtn() {
     method: "POST",
     body: JSON.stringify({
       content: content.value,
-      tags: selectedTags.value
+      tags: selectedTags.value,
+      attributes: [].concat(isNSFW.value ? ["NSFW"] : [])
     }),
     headers: {
       "Content-Type": "application/json"
