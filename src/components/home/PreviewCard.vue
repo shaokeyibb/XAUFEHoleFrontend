@@ -25,7 +25,8 @@
       <v-card-text>
         <template v-if="data.attributes.find(it=>it==='NSFW')">
           <v-icon :color="unimportant">mdi-information</v-icon>
-          <span class="theme-unimportant">这篇树洞已被发布者或管理员标记为“不适宜在工作期间查看（NSFW）”，因此其首页预览现在已被隐藏。</span>
+          <span
+              class="theme-unimportant">这篇树洞已被发布者或管理员标记为“不适宜在工作期间查看（NSFW）”，因此其首页预览现在已被隐藏。</span>
         </template>
         <template v-else>
           <div class="card-text-main">
@@ -153,5 +154,9 @@ function handleClickShare() {
 .card-text-comments-content {
   padding-left: 16px;
   padding-right: 16px;
+}
+
+.card-text-main >>> img {
+  max-height: 50vh;
 }
 </style>
