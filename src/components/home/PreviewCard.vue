@@ -26,7 +26,7 @@
         <template v-if="data.attributes.find(it=>it==='NSFW')">
           <v-icon :color="unimportant">mdi-information</v-icon>
           <span
-              class="theme-unimportant">这篇树洞已被发布者或管理员标记为“不适宜在工作期间查看（NSFW）”，因此其首页预览现在已被隐藏。</span>
+              class="theme-unimportant">这篇树洞已被发布者或管理员标记为“不适宜在工作期间查看（NSFW）”，因此其首页预览现在已被隐藏。您可能需要登录后才能继续查看该树洞的内容。</span>
         </template>
         <template v-else>
           <div class="card-text-main">

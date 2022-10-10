@@ -9,7 +9,7 @@
   <v-switch v-model="isNSFW" :disabled="isSending"
             :color="secondary"
             label="将这篇树洞标记为 NSFW"
-            messages="是否将这篇树洞标记为“不适宜在工作期间查看（NSFW）”？这将使得这篇树洞在首页不会显示文章预览。对于一些不适宜的内容，我们建议您可以选择标记为 NSFW。"
+            messages="是否将这篇树洞标记为“不适宜在工作期间查看（NSFW）”？这将使得这篇树洞在首页不会显示文章预览，且其他人必须登录后才能查看该树洞。"
   ></v-switch>
 </template>
 
