@@ -24,7 +24,8 @@
     <div class="bottom">
       <v-card-actions>
         <v-btn prepend-icon="mdi-reply" v-if="data.id < 1" @click="$emit('clickReply')">回复</v-btn>
-<!--        <v-btn prepend-icon="mdi-reply" v-else @click="$emit('clickReply',data.id)">回复</v-btn>-->
+        <v-btn prepend-icon="mdi-reply" v-else @click="$emit('clickReply',data.id,data.poster_index)">回复
+        </v-btn>
         <v-btn prepend-icon="mdi-alert">举报</v-btn>
         <v-btn prepend-icon="mdi-star-plus" v-if="data.id < 1">收藏</v-btn>
       </v-card-actions>

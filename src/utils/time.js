@@ -10,7 +10,7 @@ export function toReadableRelativeTime(timestamp) {
     const months = Math.floor(days / 30);
     const years = Math.floor(months / 12);
     if (years > 0 || months > 0 || days > 0) {
-        return date.toLocaleTimeString()
+        return date.toLocaleDateString() + " " + date.toLocaleTimeString()
     }
     if (hours > 0) {
         return hours + " 小时前";

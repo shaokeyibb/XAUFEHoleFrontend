@@ -39,11 +39,11 @@ function initial(id) {
   ])
 }
 
-function handleClickReply(subId) {
-  if (!subId) {
+function handleClickReply(subId, poster_index) {
+  if (subId === undefined || poster_index === undefined) {
     router.push("/reply/" + route.params.id)
   } else {
-    router.push("/reply/" + route.params.id + "/" + subId)
+    router.push("/reply/" + route.params.id + "/" + subId + "?poster_index=" + poster_index)
   }
 }
 

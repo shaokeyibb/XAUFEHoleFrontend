@@ -9,6 +9,7 @@ import {onBeforeRouteUpdate, useRoute, useRouter} from "vue-router";
 import Editor from "../components/create/Editor.vue";
 import {backendApiUrl} from "../configurations/config.ts";
 import {checkUserLogin, fetchX} from "../service/frontend.ts";
+import {getFullPosterNameByIndex, getQueryVariable} from "../utils/frontend.js";
 
 const router = useRouter()
 const route = useRoute()
@@ -96,7 +97,16 @@ function initial(id, subId) {
       handler: handleClickLaunchBtn
     }
   ])
-  checkUserLogin("/reply/" + route.params.id)
+  if (subId) {
+    checkUserLogin("/reply/" + id + "/" + subId)
+    if (getQueryVariable("poster_index") !== undefined) {
+      content.value = "回复 " + fullId + "：@" + getFullPosterNameByIndex(getQueryVariable("poster_index")) + " " + content.value
+      // remove parameter of the url
+      history.replaceState(null, null, location.pathname + "#/reply/" + id + "/" + subId)
+    }
+  } else {
+    checkUserLogin("/reply/" + id)
+  }
 }
 
 onMounted(() => {
