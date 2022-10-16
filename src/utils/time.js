@@ -9,14 +9,8 @@ export function toReadableRelativeTime(timestamp) {
     const days = Math.floor(hours / 24);
     const months = Math.floor(days / 30);
     const years = Math.floor(months / 12);
-    if (years > 0) {
-        return years + " 年以前";
-    }
-    if (months > 0) {
-        return months + " 个月以前";
-    }
-    if (days > 0) {
-        return days + " 天前";
+    if (years > 0 || months > 0 || days > 0) {
+        return date.toLocaleTimeString()
     }
     if (hours > 0) {
         return hours + " 小时前";
