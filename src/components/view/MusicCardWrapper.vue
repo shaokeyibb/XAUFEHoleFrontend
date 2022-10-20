@@ -29,7 +29,7 @@ const props = defineProps({
 })
 
 const detectedNeteaseMusic = computed(() => {
-  const regex = /[https:\/\/y\.music\.163\.com\/m\/song\?|https:\/\/music\.163\.com\/song\?]id=(\d+)/gm;
+  const regex = /[https:\/\/y\.music\.163\.com\/m\/song\?|https:\/\/music\.163\.com\/song\?][\W]id=(\d+)/gm;
   let m;
   const result = []
   while ((m = regex.exec(props.content)) !== null) {
