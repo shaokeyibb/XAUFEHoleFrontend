@@ -16,6 +16,7 @@
       <div class="card_content overflow-auto">
         <vue-showdown :markdown="data.content"></vue-showdown>
       </div>
+      <MusicCardWrapper :content="data.content"/>
       <div class="metadata_container">
         <span class="theme-text_dark">{{ fullCommentId }}</span>
         <span class="theme-unimportant">{{ readableTimePrefix }} {{ readableTime }}</span>
@@ -38,6 +39,7 @@ import {secondary} from '../../themes/color.js'
 import {toReadableRelativeTime} from "../../utils/time.js";
 import {getFullPosterNameByIndex} from "../../utils/frontend.js";
 import {computed} from "vue";
+import MusicCardWrapper from "./MusicCardWrapper.vue";
 
 const readableTimePrefix = computed(() => {
   if (props.data.id < 1) {

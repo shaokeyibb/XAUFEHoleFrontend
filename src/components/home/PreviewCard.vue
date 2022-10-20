@@ -32,6 +32,7 @@
           <div class="card-text-main">
             <vue-showdown :markdown="data.preview" :options="{headerLevelStart: 3}"></vue-showdown>
           </div>
+          <MusicCardWrapper :content="data.preview" :simplify="true"/>
         </template>
       </v-card-text>
       <div class="card-text-comments" v-if="data.comments.length!==0" v-for="comment in data.comments">
@@ -69,6 +70,7 @@ import {toReadableRelativeTime} from "../../utils/time.js";
 import PreviewCardComment from "./PreviewCardComment.vue";
 import {useRouter} from "vue-router";
 import {copyToClipboard} from "../../service/frontend.ts";
+import MusicCardWrapper from "../view/MusicCardWrapper.vue";
 
 const router = useRouter()
 
