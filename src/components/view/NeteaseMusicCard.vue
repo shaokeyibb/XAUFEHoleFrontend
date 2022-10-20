@@ -16,7 +16,7 @@
         </v-card-subtitle>
       </div>
       <v-card-actions>
-        <audio :src="'https://music.163.com/song/media/outer/url?id='+id+'.mp3'" controls/>
+        <audio :src="songUrl" controls/>
       </v-card-actions>
     </template>
     <template v-else>
@@ -33,7 +33,7 @@
         </v-card-subtitle>
       </div>
       <v-card-actions>
-        <audio :src="'https://music.163.com/song/media/outer/url?id='+id+'.mp3'" controls/>
+        <audio :src="songUrl" controls/>
       </v-card-actions>
     </template>
   </v-card>
@@ -64,6 +64,12 @@ const [data] = useAsyncComputed(() => {
 const song = computed(() => {
   return (data.value && data.value.code === 200) ? data.value.songs[0] : null
 });
+
+const [songUrl] = useAsyncComputed(() => {
+  return fetch(neteaseApiUrl + '/song/url?id=' + props.id)
+      .then(res => res.json())
+      .then(res => res.data[0].url.replace("http://", "https://"))
+}, null)
 
 function handleClickMusicCard() {
   window.open("https://music.163.com/song?id=" + props.id, "_blank")
