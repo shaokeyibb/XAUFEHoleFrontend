@@ -25,6 +25,8 @@
 import {computed} from "vue";
 import NeteaseMusicCard from "./NeteaseMusicCard.vue";
 import BilibiliVideoCard from "./BilibiliVideoCard.vue";
+import useAsyncComputed from "../../utils/use-async-computed.ts";
+import {backendApiUrl} from "../../configurations/config.ts";
 
 const props = defineProps({
   content: {
@@ -51,18 +53,48 @@ const detectedNeteaseMusic = computed(() => {
   return result
 })
 
-const detectedBilibiliVideo = computed(() => {
-  const regex = /https:\/\/www\.bilibili\.com\/video\/(BV[\w]{10})/gmi;
-  let m;
-  const result = []
-  while ((m = regex.exec(props.content)) !== null) {
-    if (m.index === regex.lastIndex) {
-      regex.lastIndex++;
+const [detectedBilibiliVideo] = useAsyncComputed(() => {
+  return new Promise((resolve) => {
+    const result = []
+
+    const regex = /https:\/\/(www|m)\.bilibili\.com\/video\/(BV\w{10})/gmi;
+    let m;
+    while ((m = regex.exec(props.content)) !== null) {
+      if (m.index === regex.lastIndex) {
+        regex.lastIndex++;
+      }
+      m[2] && result.push(m[2])
     }
-    m[1] && result.push(m[1])
-  }
-  return result
-})
+
+    let remain = 0;
+    const regex2 = /https:\/\/b23\.tv\/([a-zA-Z0-9]+)/gmi;
+    let m2;
+    while ((m2 = regex2.exec(props.content)) !== null) {
+      if (m2.index === regex2.lastIndex) {
+        regex2.lastIndex++;
+      }
+      if (m2[1]) {
+        remain++;
+        fetch(backendApiUrl + "/bilibili/uniqueKeyToBvid?unique_k=" + m2[1])
+            .then(res => res.text())
+            .then(res => {
+              result.push(res)
+            })
+            .finally(() => {
+              remain--;
+              if (remain <= 0) {
+                resolve(result)
+              }
+            })
+      }
+    }
+
+    if (remain === 0) {
+      resolve(result)
+    }
+  })
+}, [])
+
 
 </script>
 
