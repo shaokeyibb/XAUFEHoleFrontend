@@ -10,7 +10,7 @@
     <div class="comment-content">
       <vue-showdown :markdown="data.content" :options="{headerLevelStart: 3}"></vue-showdown>
     </div>
-    <MusicCardWrapper :content="data.content" :simplify="true"/>
+    <MediaWrapper :content="data.content" :simplify="true"/>
   </div>
 </template>
 
@@ -18,7 +18,7 @@
 import {getFullPosterNameByIndex} from "../../utils/frontend.js";
 import {toReadableRelativeTime} from "../../utils/time.js";
 import {unimportant} from "../../themes/color.js";
-import MusicCardWrapper from "../view/MusicCardWrapper.vue";
+import MediaWrapper from "../view/MediaWrapper.vue";
 
 defineProps({
   data: {

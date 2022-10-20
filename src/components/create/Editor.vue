@@ -25,7 +25,7 @@
         <div class="main-editor-preview">
           <vue-showdown id="preview" :markdown="modelValue"></vue-showdown>
         </div>
-        <MusicCardWrapper :content="modelValue"/>
+        <MediaWrapper :content="modelValue"/>
       </v-card-text>
     </v-card>
   </div>
@@ -60,7 +60,7 @@ import {ref} from "vue";
 import {fetchX} from "../../service/frontend.ts";
 import {backendApiUrl} from "../../configurations/config.ts";
 import {primary} from "../../themes/color.js";
-import MusicCardWrapper from "../view/MusicCardWrapper.vue";
+import MediaWrapper from "../view/MediaWrapper.vue";
 
 const props = defineProps({
   label: {
