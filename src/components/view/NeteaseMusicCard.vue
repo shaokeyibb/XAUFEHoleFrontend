@@ -9,7 +9,9 @@
         ></v-img>
         <v-card-title>
           {{ song.name }}
-          <span v-if="song.alia && song.alia.length>0" class="theme-unimportant">（{{ song.alia[0] }}）</span>
+          <span v-if="song.alia && song.alia.length>0" class="theme-unimportant"
+                style="font-size: .875rem">（{{ song.alia[0] }}）</span>
+          <span v-if="song.fee !== 0 && song.fee !== 8" class="theme-error" style="font-size: .875rem">仅试听</span>
         </v-card-title>
         <v-card-subtitle>
           {{ song.ar.map(it => it.name).join(", ") }} - {{ song.al.name }}
@@ -26,7 +28,9 @@
             <img :src="song.al.picUrl" alt="album picture"/>
           </v-avatar>
           {{ song.name }}
-          <span v-if="song.alia && song.alia.length>0" class="theme-unimportant">（{{ song.alia[0] }}）</span>
+          <span v-if="song.alia && song.alia.length>0" class="theme-unimportant"
+                style="font-size: .875rem">（{{ song.alia[0] }}）</span>
+          <span v-if="song.fee !== 0 && song.fee !== 8" class="theme-error" style="font-size: .875rem">仅试听</span>
         </v-card-title>
         <v-card-subtitle>
           {{ song.ar.map(it => it.name).join(", ") }} - {{ song.al.name }}
