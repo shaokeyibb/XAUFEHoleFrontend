@@ -1,5 +1,5 @@
 <template>
-  <v-card v-if="song" @click="" style="margin: 20px">
+  <v-card v-if="song" @click="" class="ma-1">
     <template v-if="!simplify">
       <div @click="handleClickMusicCard">
         <v-img

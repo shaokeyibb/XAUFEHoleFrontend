@@ -8,7 +8,6 @@
           :id="id"
           :simplify="simplify"
       />
-      <v-spacer class="my-3"></v-spacer>
     </v-card>
     <v-card variant="outlined" v-if="detectedBilibiliVideo.length!==0">
       <span style="margin-left: 10px;margin-top: 10px; font-size: 12px" class="theme-unimportant">文章中的视频：</span>

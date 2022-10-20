@@ -8,7 +8,7 @@
     </v-card>
   </template>
   <template v-else>
-    <v-card v-if="video" @click="handleClickVideoCard" class="mt-3">
+    <v-card v-if="video" @click="handleClickVideoCard" class="ma-1">
       <v-card-title>
         {{ video.title }}
       </v-card-title>
