@@ -1,7 +1,8 @@
 <template>
   <v-card v-if="song" @click="" class="ma-1">
     <template v-if="!simplify">
-      <div @click="handleClickMusicCard">
+      <div @click="handleClickMusicCard"
+           style="padding: 8px 16px;">
         <v-img
             :src="song.al.picUrl"
             cover="cover"

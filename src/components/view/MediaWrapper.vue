@@ -1,11 +1,17 @@
 <template>
   <div class="media-wrapper" style="margin-top: 10px;margin-bottom: 10px">
-    <v-card variant="outlined" v-if="detectedNeteaseMusic.length!==0">
+    <v-card variant="outlined" v-if="detectedNeteaseMusic.length!==0||detectedQQMusic.length!==0">
       <span style="margin-left: 10px;margin-top: 10px; font-size: 12px" class="theme-unimportant">文章中的歌曲：</span>
       <NeteaseMusicCard
           v-for="id in detectedNeteaseMusic"
           :key="id"
           :id="id"
+          :simplify="simplify"
+      />
+      <QQMusicCard
+          v-for="mid in detectedQQMusic"
+          :key="mid"
+          :mid="mid"
           :simplify="simplify"
       />
     </v-card>
@@ -27,6 +33,7 @@ import NeteaseMusicCard from "./NeteaseMusicCard.vue";
 import BilibiliVideoCard from "./BilibiliVideoCard.vue";
 import useAsyncComputed from "../../utils/use-async-computed.ts";
 import {backendApiUrl} from "../../configurations/config.ts";
+import QQMusicCard from "./QQMusicCard.vue";
 
 const props = defineProps({
   content: {
@@ -41,7 +48,7 @@ const props = defineProps({
 })
 
 const detectedNeteaseMusic = computed(() => {
-  const regex = /[https:\/\/y\.music\.163\.com\/m\/song\?|https:\/\/music\.163\.com\/song\?][\W]id=(\d+)/gm;
+  const regex = /[https:\/\/y\.music\.163\.com\/m\/song\?|https:\/\/music\.163\.com\/song\?]\Wid=(\d+)/gm;
   let m;
   const result = []
   while ((m = regex.exec(props.content)) !== null) {
@@ -51,7 +58,21 @@ const detectedNeteaseMusic = computed(() => {
     m[1] && result.push(m[1])
   }
   return result
-})
+}, [])
+
+const detectedQQMusic = computed(() => {
+  const regex = /https:\/\/y\.qq\.com\/n\/ryqq\/songDetail\/(\w{14})|https:\/\/i\.y\.qq\.com\/n2\/m\/musiclite\/playsong\/index\.html\?.*songmid=(\w{14})/gmi;
+  let m;
+  const result = []
+  while ((m = regex.exec(props.content)) !== null) {
+    if (m.index === regex.lastIndex) {
+      regex.lastIndex++;
+    }
+    m[1] && result.push(m[1])
+    m[2] && result.push(m[2])
+  }
+  return result
+}, [])
 
 const [detectedBilibiliVideo] = useAsyncComputed(() => {
   return new Promise((resolve) => {
