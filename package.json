@@ -24,5 +24,6 @@
     "vite-plugin-vuetify": "^1.0.0-alpha.17",
     "vue-cli-plugin-vuetify": "~2.5.8"
   },
-  "type": "module"
+  "type": "module",
+  "license": "AGPL-3.0-or-later"
 }
