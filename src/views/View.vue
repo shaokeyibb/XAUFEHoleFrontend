@@ -50,6 +50,7 @@ function handleClickReply(subId, poster_index) {
 function generateOwnedComment(comment) {
   return {
     post_id: view_data.value.id,
+    star: view_data.value.star,
     ...comment
   }
 }

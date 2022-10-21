@@ -28,7 +28,14 @@
         <v-btn prepend-icon="mdi-reply" v-else @click="$emit('clickReply',data.id,data.poster_index)">回复
         </v-btn>
         <v-btn prepend-icon="mdi-alert">举报</v-btn>
-        <v-btn prepend-icon="mdi-star-plus" v-if="data.id < 1">收藏</v-btn>
+        <template v-if="data.id < 1">
+          <template v-if="starred===true || (starred===undefined && data.star)">
+            <v-btn prepend-icon="mdi-star-check" @click="handleClickStar(false)">已收藏</v-btn>
+          </template>
+          <template v-else-if="starred===false || (starred===undefined && !data.star)">
+            <v-btn prepend-icon="mdi-star-plus" @click="handleClickStar(true)">收藏</v-btn>
+          </template>
+        </template>
       </v-card-actions>
     </div>
   </v-card>
@@ -38,8 +45,10 @@
 import {secondary} from '../../themes/color.js'
 import {toReadableRelativeTime} from "../../utils/time.js";
 import {getFullPosterNameByIndex} from "../../utils/frontend.js";
-import {computed} from "vue";
+import {computed, ref} from "vue";
 import MediaWrapper from "./MediaWrapper.vue";
+import {fetchX} from "../../service/frontend.ts";
+import {backendApiUrl} from "../../configurations/config.ts";
 
 const readableTimePrefix = computed(() => {
   if (props.data.id < 1) {
@@ -66,7 +75,25 @@ const props = defineProps({
   }
 })
 
+const starred = ref(undefined)
+
 defineEmits(['clickReply'])
+
+function handleClickStar(star) {
+  fetchX(backendApiUrl + "/post/star/" + props.data.post_id, {
+    method: "PATCH",
+    body: JSON.stringify({
+      star: star
+    }),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }).then((res) => {
+    if (res.status === 200) {
+      starred.value = star
+    }
+  })
+}
 </script>
 
 <style scoped>

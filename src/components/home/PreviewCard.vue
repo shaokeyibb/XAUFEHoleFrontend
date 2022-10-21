@@ -50,7 +50,16 @@
           }})
         </v-btn>
         <v-btn prepend-icon="mdi-share-variant" @click="handleClickShare">分享</v-btn>
-        <v-btn prepend-icon="mdi-star-plus">收藏 ({{ data.star_count }})</v-btn>
+        <template v-if="starred===true || (starred===undefined && data.star)">
+          <v-btn prepend-icon="mdi-star-check" @click="handleClickStar(false)">已收藏
+            ({{ starCount }})
+          </v-btn>
+        </template>
+        <template v-else-if="starred===false || (starred===undefined && !data.star)">
+          <v-btn prepend-icon="mdi-star-plus" @click="handleClickStar(true)">收藏
+            ({{ starCount }})
+          </v-btn>
+        </template>
       </v-card-actions>
       <div class="actions-remain" @click="handleClickCard">
         <v-spacer class="flex-grow-1"></v-spacer>
@@ -65,12 +74,13 @@
 
 <script setup>
 import {error, secondary, unimportant} from '../../themes/color.js'
-import {computed} from "vue";
+import {computed, ref} from "vue";
 import {toReadableRelativeTime} from "../../utils/time.js";
 import PreviewCardComment from "./PreviewCardComment.vue";
 import {useRouter} from "vue-router";
-import {copyToClipboard} from "../../service/frontend.ts";
+import {copyToClipboard, fetchX} from "../../service/frontend.ts";
 import MediaWrapper from "../view/MediaWrapper.vue";
+import {backendApiUrl} from "../../configurations/config.ts";
 
 const router = useRouter()
 
@@ -80,6 +90,9 @@ const props = defineProps({
     required: true
   }
 })
+
+const starred = ref(undefined)
+const starCount = ref(props.data.star_count)
 
 function generateOwnedComment(comment) {
   return {
@@ -102,6 +115,27 @@ function handleClickReply() {
 
 function handleClickShare() {
   copyToClipboard(window.location.href + "view/" + props.data.id)
+}
+
+function handleClickStar(star) {
+  fetchX(backendApiUrl + "/post/star/" + props.data.id, {
+    method: "PATCH",
+    body: JSON.stringify({
+      star: star
+    }),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }).then((res) => {
+    if (res.status === 200) {
+      if (star) {
+        starCount.value++
+      } else {
+        starCount.value--
+      }
+      starred.value = star
+    }
+  })
 }
 
 </script>
