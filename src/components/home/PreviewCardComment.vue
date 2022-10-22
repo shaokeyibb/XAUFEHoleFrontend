@@ -8,7 +8,7 @@
       <span class="comment-id">#{{ data.post_id }}-{{ data.id }}</span>
     </div>
     <div class="comment-content">
-      <vue-showdown :markdown="data.content" :options="{headerLevelStart: 3}"></vue-showdown>
+      <vue-showdown :markdown="data.content" :options="{headerLevelStart: 3,simplifiedAutoLink: false}"></vue-showdown>
     </div>
     <MediaWrapper :content="data.content" :simplify="true"/>
   </div>

@@ -30,7 +30,8 @@
         </template>
         <template v-else>
           <div class="card-text-main">
-            <vue-showdown :markdown="data.preview" :options="{headerLevelStart: 3}"></vue-showdown>
+            <vue-showdown :markdown="data.preview"
+                          :options="{headerLevelStart: 3, simplifiedAutoLink: false}"></vue-showdown>
           </div>
           <MediaWrapper :content="data.preview" :simplify="true"/>
         </template>
