@@ -115,7 +115,11 @@ function handleClickReply() {
 }
 
 function handleClickShare() {
-  copyToClipboard(window.location.href + "view/" + props.data.id)
+  copyToClipboard(`${props.data.preview}
+----
+${window.location.href + "view/" + props.data.id}
+（来自：西财树洞）`.trim()
+  )
 }
 
 function handleClickStar(star) {
