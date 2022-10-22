@@ -1,5 +1,5 @@
 export const vueshowdown_conf = {
-    flavor: 'vanilla',
+    flavor: 'github',
     options: {
         simplifiedAutoLink: true,
         strikethrough: true,
@@ -7,6 +7,11 @@ export const vueshowdown_conf = {
         smoothLivePreview: true,
         smartIndentationFix: true,
         simpleLineBreaks: true,
-        openLinksInNewWindow: true
+        openLinksInNewWindow: true,
+        splitAdjacentBlockquotes: true,
+        moreStyling: true,
+        underline: true,
+        emoji: true,
+        backslashEscapesHTMLTags: true
     },
 }
