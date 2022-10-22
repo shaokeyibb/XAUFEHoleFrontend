@@ -1,6 +1,6 @@
 <template>
   <div v-for="data in preview_data">
-    <preview-card :data="data"></preview-card>
+    <preview-card :data="data" :id="'post_'+data.id"></preview-card>
     <v-spacer class="mb-3"></v-spacer>
   </div>
   <div class="no-more-post" id="no-more-post">
@@ -26,7 +26,7 @@
 <script setup>
 import {secondary, unimportant} from '../themes/color.js'
 import FabBtn from "../components/FabBtn.vue";
-import {onMounted, onUnmounted, reactive, ref, watch} from "vue";
+import {onActivated, onDeactivated, onMounted, onUnmounted, reactive, ref, watch} from "vue";
 import {getQueryVariable, isInViewport} from "../utils/frontend.js";
 import useAsyncComputed from "../utils/use-async-computed.ts";
 import {fetchX} from "../service/frontend.ts";
@@ -51,7 +51,16 @@ const snackbar = reactive({
   text: ""
 })
 
-onMounted(() => {
+const [isUserLogin] = useAsyncComputed(() => {
+  return fetchX(backendApiUrl + "/user/info", null, true)
+      .then(res => res.json())
+      .then(res => res.id !== undefined)
+      .catch(() => false)
+}, false)
+
+let timer
+
+onActivated(() => {
   emit('modifytitle', undefined)
   emit('modifyicon', undefined)
   emit('modifyactions', [
@@ -65,28 +74,53 @@ onMounted(() => {
     snackbar.enable = true
     snackbar.text = decodeURIComponent(getQueryVariable("snakebar"))
     // remove parameter of the url
-    history.replaceState(null, null, location.pathname + "#/")
+    history.replaceState(null, null, location.pathname)
   }
+  timer = setInterval(() => {
+    if (!isInViewport(document.getElementById("no-more-post"))) return;
+    if (isLoading.value) return;
+    if (current_page_data.value === undefined) return;
+    isLoading.value = true
+    page.value = page.value + 1
+  }, 200)
+  checkUserLogin(isUserLogin.value)
 })
 
-const [isUserLogin] = useAsyncComputed(() => {
-  return fetchX(backendApiUrl + "/user/info", null, true)
-      .then(res => res.json())
-      .then(res => res.id !== undefined)
-      .catch(() => false)
-}, false)
+onDeactivated(() => {
+  window.clearInterval(timer)
+})
+
+function checkUserLogin(isUserLogin) {
+  if (isUserLogin) {
+    onLogin()
+  } else {
+    onLogout()
+  }
+}
 
 watch(isUserLogin, (newVal) => {
-  if (newVal) {
-    emit('modifyactions', [
-      {
-        icon: "mdi-account-circle",
-        tooltip: "我的档案",
-        handler: handleClickProfileBtn
-      }
-    ])
-  }
+  checkUserLogin(newVal)
 })
+
+function onLogin() {
+  emit('modifyactions', [
+    {
+      icon: "mdi-account-circle",
+      tooltip: "我的档案",
+      handler: handleClickProfileBtn
+    }
+  ])
+}
+
+function onLogout() {
+  emit('modifyactions', [
+    {
+      icon: "mdi-account-circle",
+      tooltip: "登录",
+      handler: handleClickAccountBtn
+    }
+  ])
+}
 
 function handleClickFabBtn() {
   router.push("/create")
@@ -104,19 +138,6 @@ watch(current_page_data, (newVal) => {
     preview_data.push(...newVal)
     isLoading.value = false
   }
-})
-
-const timer = setInterval(() => {
-  if (!isInViewport(document.getElementById("no-more-post"))) return;
-  if (isLoading.value) return;
-  if (current_page_data.value === undefined) return;
-  isLoading.value = true
-  page.value = page.value + 1
-}, 200)
-
-
-onUnmounted(() => {
-  window.clearInterval(timer)
 })
 
 </script>

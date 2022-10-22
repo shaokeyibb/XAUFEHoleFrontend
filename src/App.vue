@@ -11,8 +11,15 @@
         </template>
       </v-banner>
       <v-container fluid>
-        <router-view @modifytitle="handleModifyTitle" @modifyicon="handleModifyIcon"
-                     @modifyactions="handleModifyActions"></router-view>
+        <router-view v-slot="{ Component }">
+          <keep-alive include="Home">
+            <component :is="Component"
+                       :key="$route.fullPath"
+                       @modifytitle="handleModifyTitle"
+                       @modifyicon="handleModifyIcon"
+                       @modifyactions="handleModifyActions"/>
+          </keep-alive>
+        </router-view>
       </v-container>
     </v-main>
     <foot-bar></foot-bar>

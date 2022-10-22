@@ -91,6 +91,10 @@ onMounted(() => {
 // }))
 
 const [view_data] = useAsyncComputed(() => {
+  if (!route.params.id) return reactive({
+    id: 0,
+    posts: []
+  })
   return fetchX(backendApiUrl + "/post/view/" + route.params.id).then(res => reactive(res.json()))
 }, reactive({
   id: 0,

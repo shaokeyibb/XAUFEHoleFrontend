@@ -1,4 +1,4 @@
-import {createRouter, createWebHashHistory} from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import ViewPost from '../views/View.vue'
@@ -55,8 +55,33 @@ const routes = [
 ]
 
 const router = createRouter({
-    history: createWebHashHistory(),
-    routes
+    history: createWebHistory(),
+    routes,
+    scrollBehavior(to, from, savedPosition) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                if (to.hash) {
+                    const el = window.location.href.split('#')[1]
+                    if (el.length) {
+                        document.getElementById(el).scrollIntoView({
+                            block: "end",
+                            inline: "nearest",
+                            behavior: 'smooth'
+                        })
+                    }
+                } else if (savedPosition) {
+                    resolve(savedPosition)
+                } else if (from.name === 'View Post' && to.name === 'Home') {
+                    const el = document.getElementById(`post_${from.params.id}`)
+                    if (el) {
+                        el.scrollIntoView(false)
+                    }
+                } else {
+                    document.getElementById('app').scrollIntoView(false)
+                }
+            }, 500)
+        })
+    }
 })
 
 export default router

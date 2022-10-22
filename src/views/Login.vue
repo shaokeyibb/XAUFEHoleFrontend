@@ -95,7 +95,7 @@ const requireRegistrationCode = ref(false)
 const authMethods = [
   // {
   //   name: "西安财经大学统一身份认证（不可用）",
-  //   href: "https://cas.xaufe.edu.cn/login?service=" + encodeURIComponent(backendApiUrl) + "/auth/casAuth?redirectUrl=" + btoa(frontendUrl + "/#/?snakebar=" + encodeURIComponent("登录成功，欢迎回来！")),
+  //   href: "https://cas.xaufe.edu.cn/login?service=" + encodeURIComponent(backendApiUrl) + "/auth/casAuth?redirectUrl=" + btoa(frontendUrl + "/?snakebar=" + encodeURIComponent("登录成功，欢迎回来！")),
   //   method: "DIRECT",
   //   additionalParams: [
   //     {

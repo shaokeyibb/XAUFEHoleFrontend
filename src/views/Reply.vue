@@ -42,7 +42,8 @@ function checkContent(content) {
 }
 
 function handleClickAppbarIcon(id, subId) {
-  router.push("/view/" + id + (subId ? ("#" + subId) : ""))
+  //router.push("/view/" + id + (subId ? ("#" + subId) : ""))
+  router.back()
 }
 
 function handleClickLaunchBtn() {
@@ -80,7 +81,7 @@ function initial(id, subId) {
   emit('modifytitle', '回复 ' + fullId)
   emit('modifyicon', {
     icon: "mdi-arrow-left",
-    tooltip: "返回 " + fullId,
+    tooltip: "返回上一页",
     handler: () => handleClickAppbarIcon(id, subId)
   })
   emit('modifyactions', [
@@ -102,7 +103,7 @@ function initial(id, subId) {
     if (getQueryVariable("poster_index") !== undefined) {
       content.value = "回复 " + fullId + "：@" + getFullPosterNameByIndex(getQueryVariable("poster_index")) + " " + content.value
       // remove parameter of the url
-      history.replaceState(null, null, location.pathname + "#/reply/" + id + "/" + subId)
+      history.replaceState(null, null, "/reply/" + id + "/" + subId)
     }
   } else {
     checkUserLogin("/reply/" + id)
