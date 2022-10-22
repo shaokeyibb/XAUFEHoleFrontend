@@ -6,7 +6,6 @@ import Create from "../views/Create.vue"
 import Reply from "../views/Reply.vue"
 import Policy from "../views/Policy.vue"
 import Profile from "../views/Profile.vue"
-import Error from "../views/Error.vue"
 
 const routes = [
     {
@@ -50,10 +49,9 @@ const routes = [
         component: Profile
     },
     {
-        path: '/error',
-        name: 'Error',
-        component: Error
-    }
+        path: "/:catchAll(.*)*",
+        component: () => import("../views/Error.vue"),
+    },
 ]
 
 const router = createRouter({
