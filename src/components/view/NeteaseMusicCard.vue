@@ -1,8 +1,7 @@
 <template>
-  <v-card v-if="song" @click="" class="ma-1">
-    <template v-if="!simplify">
-      <div @click="handleClickMusicCard"
-           style="padding: 8px 16px;">
+  <template v-if="song">
+    <v-card v-if="!simplify" class="ma-1" @click="handleClickMusicCard">
+      <div style="padding: 8px 16px;">
         <v-img
             :src="song.al.picUrl"
             cover="cover"
@@ -21,8 +20,8 @@
       <v-card-actions>
         <audio :src="songUrl" controls/>
       </v-card-actions>
-    </template>
-    <template v-else>
+    </v-card>
+    <v-card class="ma-1" v-else>
       <div>
         <v-card-title>
           <v-avatar rounded="0">
@@ -40,8 +39,8 @@
       <v-card-actions>
         <audio :src="songUrl" controls/>
       </v-card-actions>
-    </template>
-  </v-card>
+    </v-card>
+  </template>
 </template>
 
 <script setup>
