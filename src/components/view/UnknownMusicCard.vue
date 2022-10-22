@@ -1,6 +1,6 @@
 <template>
-  <v-card @click="handleClickMusicCard" class="ma-1">
-    <div v-if="!simplify" style="padding: 8px 16px;">
+  <v-card class="ma-1">
+    <div v-if="!simplify" @click="handleClickMusicCard" style="padding: 8px 16px;">
       <v-card-title>
         未知歌曲
         <span v-if="from" class="theme-unimportant"

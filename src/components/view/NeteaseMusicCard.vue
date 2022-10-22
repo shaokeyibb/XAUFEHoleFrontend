@@ -23,7 +23,7 @@
       </v-card-actions>
     </template>
     <template v-else>
-      <div @click="handleClickMusicCard">
+      <div>
         <v-card-title>
           <v-avatar rounded="0">
             <img :src="song.al.picUrl" alt="album picture"/>
