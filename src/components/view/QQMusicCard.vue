@@ -74,7 +74,14 @@ const song = computed(() => {
 const [songUrl] = useAsyncComputed(() => {
   return fetch(qqMusicApiUrl + '/song/urls?id=' + props.mid)
       .then(res => res.json())
-      .then(res => res.data[props.mid])
+      .then(res => {
+        if (res.result === 100) {
+          return res.data[props.mid]
+        } else {
+          return null
+        }
+      })
+      .catch(null)
 }, null)
 
 function handleClickMusicCard() {
