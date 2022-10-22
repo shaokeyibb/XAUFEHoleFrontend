@@ -58,7 +58,7 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
     scrollBehavior(to, from, savedPosition) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             setTimeout(() => {
                 if (to.hash) {
                     const el = window.location.href.split('#')[1]
@@ -77,7 +77,7 @@ const router = createRouter({
                         el.scrollIntoView(false)
                     }
                 } else {
-                    document.getElementById('app').scrollIntoView(false)
+                    document.getElementById('app').scrollIntoView()
                 }
             }, 500)
         })
