@@ -1,6 +1,7 @@
 <template>
   <div class="media-wrapper" style="margin-top: 10px;margin-bottom: 10px">
-    <v-card variant="outlined" v-if="detectedNeteaseMusic.length!==0||detectedQQMusic.length!==0">
+    <v-card variant="outlined"
+            v-if="detectedNeteaseMusic.length!==0||detectedQQMusic.length!==0||detectedUnknownQQMusic.length!==0">
       <span style="margin-left: 10px;margin-top: 10px; font-size: 12px" class="theme-unimportant">文章中的歌曲：</span>
       <NeteaseMusicCard
           v-for="id in detectedNeteaseMusic"
@@ -12,6 +13,12 @@
           v-for="mid in detectedQQMusic"
           :key="mid"
           :mid="mid"
+          :simplify="simplify"
+      />
+      <UnknownMusicCard
+          v-for="unknown in detectedUnknownQQMusic"
+          :link="unknown.link"
+          :from="unknown.from"
           :simplify="simplify"
       />
     </v-card>
@@ -34,6 +41,7 @@ import BilibiliVideoCard from "./BilibiliVideoCard.vue";
 import useAsyncComputed from "../../utils/use-async-computed.ts";
 import {backendApiUrl} from "../../configurations/config.ts";
 import QQMusicCard from "./QQMusicCard.vue";
+import UnknownMusicCard from "./UnknownMusicCard.vue";
 
 const props = defineProps({
   content: {
@@ -58,7 +66,7 @@ const detectedNeteaseMusic = computed(() => {
     m[1] && result.push(m[1])
   }
   return result
-}, [])
+})
 
 const detectedQQMusic = computed(() => {
   const regex = /https:\/\/y\.qq\.com\/n\/ryqq\/songDetail\/(\w{14})|https:\/\/i\.y\.qq\.com\/n2\/m\/musiclite\/playsong\/index\.html\?.*songmid=(\w{14})/gmi;
@@ -72,7 +80,23 @@ const detectedQQMusic = computed(() => {
     m[2] && result.push(m[2])
   }
   return result
-}, [])
+})
+
+const detectedUnknownQQMusic = computed(() => {
+  const regex = /https:\/\/y\.qq\.com\/n\/ryqq\/songDetail\/\d+$|https:\/\/c\.y\.qq\.com\/base\/fcgi-bin\/u\?__=.+/gmi;
+  let m;
+  let result = []
+  while ((m = regex.exec(props.content)) !== null) {
+    if (m.index === regex.lastIndex) {
+      regex.lastIndex++;
+    }
+    result.push({
+      link: m[0],
+      from: "QQ音乐"
+    })
+  }
+  return result
+})
 
 const [detectedBilibiliVideo] = useAsyncComputed(() => {
   return new Promise((resolve) => {
