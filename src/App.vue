@@ -95,4 +95,8 @@ img {
   max-height: 100%;
 }
 
+html {
+  scroll-padding-top: 64px;
+}
+
 </style>

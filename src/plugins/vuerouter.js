@@ -64,7 +64,7 @@ const router = createRouter({
                     const el = window.location.href.split('#')[1]
                     if (el.length) {
                         document.getElementById(el).scrollIntoView({
-                            block: "end",
+                            block: "start",
                             inline: "nearest",
                             behavior: 'smooth'
                         })
@@ -74,7 +74,7 @@ const router = createRouter({
                 } else if (from.name === 'View Post' && to.name === 'Home') {
                     const el = document.getElementById(`post_${from.params.id}`)
                     if (el) {
-                        el.scrollIntoView(false)
+                        el.scrollIntoView(true)
                     }
                 } else {
                     document.getElementById('app').scrollIntoView()
