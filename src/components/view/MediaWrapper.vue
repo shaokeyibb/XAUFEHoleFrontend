@@ -152,16 +152,16 @@ const [detectedBilibiliVideo] = useAsyncComputed(() => {
 }, [])
 
 const detectedGitHubRepo = computed(() => {
-  const regex = /https?:\/\/github\.com\/(\S+)\/(\S+)/gm;
+  const regex = /https?:\/\/(www\.)?github\.com\/(\S+)\/(\S+)/gm;
   let m;
   const result = []
   while ((m = regex.exec(props.content)) !== null) {
     if (m.index === regex.lastIndex) {
       regex.lastIndex++;
     }
-    m[1] && m[2] && result.push({
-      user: m[1],
-      repo: m[2]
+    m[2] && m[3] && result.push({
+      user: m[2],
+      repo: m[3]
     })
   }
   return result
