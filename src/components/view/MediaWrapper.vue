@@ -31,6 +31,16 @@
           :simplify="simplify"
       />
     </v-card>
+    <v-card variant="outlined" v-if="detectedGitHubRepo.length!==0">
+      <span style="margin-left: 10px;margin-top: 10px; font-size: 12px" class="theme-unimportant">文章中的项目：</span>
+      <GitHubRepoCard
+          v-for="data in detectedGitHubRepo"
+          :key="data.user+'/'+data.repo"
+          :user="data.user"
+          :repo="data.repo"
+          :simplify="simplify"
+      />
+    </v-card>
   </div>
 </template>
 
@@ -42,6 +52,7 @@ import useAsyncComputed from "../../utils/use-async-computed.ts";
 import {backendApiUrl} from "../../configurations/config.ts";
 import QQMusicCard from "./QQMusicCard.vue";
 import UnknownMusicCard from "./UnknownMusicCard.vue";
+import GitHubRepoCard from "./GitHubRepoCard.vue";
 
 const props = defineProps({
   content: {
@@ -139,6 +150,22 @@ const [detectedBilibiliVideo] = useAsyncComputed(() => {
     }
   })
 }, [])
+
+const detectedGitHubRepo = computed(() => {
+  const regex = /https?:\/\/github\.com\/(\S+)\/(\S+)/gm;
+  let m;
+  const result = []
+  while ((m = regex.exec(props.content)) !== null) {
+    if (m.index === regex.lastIndex) {
+      regex.lastIndex++;
+    }
+    m[1] && m[2] && result.push({
+      user: m[1],
+      repo: m[2]
+    })
+  }
+  return result
+})
 
 
 </script>
