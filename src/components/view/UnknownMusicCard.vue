@@ -17,7 +17,7 @@
   <v-card v-else class="ma-1">
     <div>
       <v-card-title>
-        未知歌曲
+        无法识别的歌曲
         <span class="theme-unimportant"
               style="font-size: .875rem">（来自 {{ from }}）</span>
       </v-card-title>
