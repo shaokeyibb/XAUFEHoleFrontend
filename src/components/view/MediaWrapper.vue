@@ -22,12 +22,18 @@
           :simplify="simplify"
       />
     </v-card>
-    <v-card variant="outlined" v-if="detectedBilibiliVideo.length!==0">
+    <v-card variant="outlined" v-if="detectedBilibiliVideo.length!==0||detectedDouyinVideo.length!==0">
       <span style="margin-left: 10px;margin-top: 10px; font-size: 12px" class="theme-unimportant">文章中的视频：</span>
       <BilibiliVideoCard
           v-for="id in detectedBilibiliVideo"
           :key="id"
           :bvid="id"
+          :simplify="simplify"
+      />
+      <DouyinVideoCard
+          v-for="data in detectedDouyinVideo"
+          :key="data.video_aweme_id"
+          :data="data"
           :simplify="simplify"
       />
     </v-card>
@@ -49,10 +55,11 @@ import {computed} from "vue";
 import NeteaseMusicCard from "./NeteaseMusicCard.vue";
 import BilibiliVideoCard from "./BilibiliVideoCard.vue";
 import useAsyncComputed from "../../utils/use-async-computed.ts";
-import {backendApiUrl} from "../../configurations/config.ts";
+import {backendApiUrl, douyinApiUrl} from "../../configurations/config.ts";
 import QQMusicCard from "./QQMusicCard.vue";
 import UnknownMusicCard from "./UnknownMusicCard.vue";
 import GitHubRepoCard from "./GitHubRepoCard.vue";
+import DouyinVideoCard from "./DouyinVideoCard.vue";
 
 const props = defineProps({
   content: {
@@ -137,8 +144,7 @@ const [detectedBilibiliVideo] = useAsyncComputed(() => {
               result.push(res)
             })
             .finally(() => {
-              remain--;
-              if (remain <= 0) {
+              if (--remain <= 0) {
                 resolve(result)
               }
             })
@@ -167,6 +173,54 @@ const detectedGitHubRepo = computed(() => {
   return result
 })
 
+const [detectedDouyinVideo] = useAsyncComputed(() => {
+  return new Promise((resolve) => {
+    let remain = 0;
+    const regex = /(.*https:\/\/\w+\.douyin\.com.*)/gm;
+    let m;
+    const result = []
+    while ((m = regex.exec(props.content)) !== null) {
+      if (m.index === regex.lastIndex) {
+        regex.lastIndex++;
+      }
+      if (m[1]) {
+        remain++;
+        fetch(douyinApiUrl + "/api?url=" + encodeURIComponent(m[1]))
+            .then(res => res.json())
+            .then(res => {
+              if (res.status === 'success') {
+                result.push(res)
+              }
+            })
+            .finally(() => {
+              if (--remain <= 0) {
+                resolve(result)
+              }
+            })
+      }
+    }
+  })
+}, [])
+
+
+// const detectedPost = computed(() => {
+//   const regex = /#(\d+)-(\d+)|#(\d+)/gs;
+//   let m;
+//   const result = []
+//   while ((m = regex.exec(props.content)) !== null) {
+//     if (m.index === regex.lastIndex) {
+//       regex.lastIndex++;
+//     }
+//     m[1] && m[2] && result.push({
+//       id: m[1],
+//       subId: m[2]
+//     })
+//     m[3] && result.push({
+//       id: m[3]
+//     })
+//   }
+//   return result
+// })
 
 </script>
 
