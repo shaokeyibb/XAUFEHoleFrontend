@@ -2,7 +2,7 @@
   <v-card v-if="!simplify" class="ma-1" @click="handleClickMusicCard">
     <div style="padding: 8px 16px;">
       <v-card-title>
-        未知歌曲
+        无法识别的歌曲
         <span v-if="from" class="theme-unimportant"
               style="font-size: .875rem">（来自 {{ from }}）</span>
       </v-card-title>
