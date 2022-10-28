@@ -1,5 +1,5 @@
 <template>
-  <div class="my-2">
+  <div class="my-2" @click="handleClickCard">
     <div class="title">
       <span class="comment-title">{{
           getFullPosterNameByIndex(data.poster_index)
@@ -19,13 +19,20 @@ import {getFullPosterNameByIndex} from "../../utils/frontend.js";
 import {toReadableRelativeTime} from "../../utils/time.js";
 import {unimportant} from "../../themes/color.js";
 import MediaWrapper from "../view/MediaWrapper.vue";
+import {useRouter} from "vue-router";
 
-defineProps({
+const router = useRouter()
+
+const props = defineProps({
   data: {
     type: Object,
     required: true
   }
 })
+
+function handleClickCard() {
+  router.push("/view/" + props.data.post_id + "#" + props.data.id)
+}
 
 </script>
 

@@ -1,41 +1,43 @@
 <template>
   <v-card @click="">
     <!-- The blank click event is only for enable animation, don't use it because it may have conflict with action buttons -->
-    <div id="main-panel" @click="handleClickCard">
-      <v-card-item>
-        <v-card-title>
-          <div class="tags-container">
-            <div class="attributes tags-container-item" v-for="attribute in data.attributes">
-              <v-chip :color="error" label="label">
-                <v-icon start icon="mdi-alert-circle"></v-icon>
-                {{ attribute }}
-              </v-chip>
+    <div id="main-panel">
+      <div class="main-preview" @click="handleClickCard">
+        <v-card-item>
+          <v-card-title>
+            <div class="tags-container">
+              <div class="attributes tags-container-item" v-for="attribute in data.attributes">
+                <v-chip :color="error" label="label">
+                  <v-icon start icon="mdi-alert-circle"></v-icon>
+                  {{ attribute }}
+                </v-chip>
+              </div>
+              <div class="tags tags-container-item" v-for="tag in data.tags">
+                <v-chip :color="secondary" label="label">
+                  <v-icon start icon="mdi-label"></v-icon>
+                  {{ tag }}
+                </v-chip>
+              </div>
             </div>
-            <div class="tags tags-container-item" v-for="tag in data.tags">
-              <v-chip :color="secondary" label="label">
-                <v-icon start icon="mdi-label"></v-icon>
-                {{ tag }}
-              </v-chip>
+            <v-spacer class="my-3"></v-spacer>
+          </v-card-title>
+          <v-card-subtitle>发布于 {{ readableTime }}</v-card-subtitle>
+        </v-card-item>
+        <v-card-text>
+          <template v-if="data.attributes.find(it=>it==='NSFW')">
+            <v-icon :color="unimportant">mdi-information</v-icon>
+            <span
+                class="theme-unimportant">这篇树洞已被发布者或管理员标记为“不适宜在工作期间查看（NSFW）”，因此其首页预览现在已被隐藏。您可能需要登录后才能继续查看该树洞的内容。</span>
+          </template>
+          <template v-else>
+            <div class="card-text-main">
+              <vue-showdown :markdown="data.preview"
+                            :options="{headerLevelStart: 3, simplifiedAutoLink: false}"></vue-showdown>
             </div>
-          </div>
-          <v-spacer class="my-3"></v-spacer>
-        </v-card-title>
-        <v-card-subtitle>发布于 {{ readableTime }}</v-card-subtitle>
-      </v-card-item>
-      <v-card-text>
-        <template v-if="data.attributes.find(it=>it==='NSFW')">
-          <v-icon :color="unimportant">mdi-information</v-icon>
-          <span
-              class="theme-unimportant">这篇树洞已被发布者或管理员标记为“不适宜在工作期间查看（NSFW）”，因此其首页预览现在已被隐藏。您可能需要登录后才能继续查看该树洞的内容。</span>
-        </template>
-        <template v-else>
-          <div class="card-text-main">
-            <vue-showdown :markdown="data.preview"
-                          :options="{headerLevelStart: 3, simplifiedAutoLink: false}"></vue-showdown>
-          </div>
-          <MediaWrapper :content="data.preview" :simplify="true"/>
-        </template>
-      </v-card-text>
+            <MediaWrapper :content="data.preview" :simplify="true"/>
+          </template>
+        </v-card-text>
+      </div>
       <div class="card-text-comments" v-if="data.comments.length!==0" v-for="comment in data.comments">
         <v-divider class="mx-3"></v-divider>
         <div class="card-text-comments-content">
