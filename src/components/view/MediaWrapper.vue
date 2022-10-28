@@ -94,7 +94,7 @@ const detectedQQMusic = computed(() => {
 })
 
 const detectedUnknownQQMusic = computed(() => {
-  const regex = /https:\/\/y\.qq\.com\/n\/ryqq\/songDetail\/\d+$|https:\/\/c\.y\.qq\.com\/base\/fcgi-bin\/u\?__=.+/gmi;
+  const regex = /https:\/\/y\.qq\.com\/n\/ryqq\/songDetail\/\d+$|https:\/\/c\.y\.qq\.com\/base\/fcgi-bin\/u\?__=\w+/gmi;
   let m;
   let result = []
   while ((m = regex.exec(props.content)) !== null) {
