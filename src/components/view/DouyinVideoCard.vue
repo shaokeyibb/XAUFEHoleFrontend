@@ -58,5 +58,6 @@ function handleClickCard() {
 span {
   color: v-bind(unimportant);
   margin-right: 4px;
+  font-size: .875rem;
 }
 </style>
