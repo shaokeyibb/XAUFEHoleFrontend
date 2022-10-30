@@ -12,6 +12,7 @@ export const vueshowdown_conf = {
         moreStyling: true,
         underline: true,
         emoji: true,
-        backslashEscapesHTMLTags: true
+        backslashEscapesHTMLTags: true,
+        ghMentions: false
     },
 }
