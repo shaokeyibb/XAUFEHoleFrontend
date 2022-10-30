@@ -54,8 +54,7 @@ function handleClickCard() {
 
 .comment-content {
   width: 85vw;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  max-height: 10vh;
   overflow: hidden;
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <v-card @click="">
+  <v-card @click="" id="preview-card">
     <!-- The blank click event is only for enable animation, don't use it because it may have conflict with action buttons -->
     <div id="main-panel">
       <div class="main-preview" @click="handleClickCard">
@@ -187,6 +187,7 @@ function handleClickStar(star) {
   -webkit-box-orient: vertical;
   overflow: hidden;
   font-size: 16px;
+  max-height: 50vh;
 }
 
 /*.card-text-main >>> img {*/
@@ -201,5 +202,9 @@ function handleClickStar(star) {
 
 .card-text-main >>> img {
   max-height: 50vh;
+}
+
+#preview-card {
+  max-height: 100vh;
 }
 </style>
