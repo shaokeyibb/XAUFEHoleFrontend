@@ -1,6 +1,5 @@
 <template>
-  <div class="post" v-for="post in view_data.posts" :id="post.id ? post.id : undefined">
-    <!--The id anchor may have broken by unknown issue-->
+  <div class="post" v-for="post in generateSortedData()" :id="post.id ? post.id : undefined">
     <view-card :data="generateOwnedComment(post)" @clickReply="handleClickReply"></view-card>
     <v-spacer class="mb-3"></v-spacer>
   </div>
@@ -9,7 +8,7 @@
 <script setup>
 import {onBeforeRouteUpdate, useRoute, useRouter} from "vue-router";
 import ViewCard from "../components/view/ViewCard.vue";
-import {onMounted, reactive} from "vue";
+import {computed, onMounted, reactive, ref, watch} from "vue";
 import useAsyncComputed from "../utils/use-async-computed.ts";
 import {fetchX} from "../service/frontend.ts";
 import {backendApiUrl} from "../configurations/config.ts";
@@ -23,6 +22,46 @@ function handleClickAppbarIcon() {
 
 const emit = defineEmits(['modifytitle', 'modifyicon', 'modifyactions'])
 
+let isAscending = ref(true)
+
+let actions = computed(() => {
+  if (isAscending.value)
+    return [
+      {
+        icon: "mdi-sort-descending",
+        tooltip: "按时间降序排列",
+        handler: () => handleClickSort(false)
+      },
+      {
+        icon: "mdi-reply",
+        tooltip: "回复此树洞",
+        handler: () => handleClickReply()
+      }
+    ]
+  else
+    return [
+      {
+        icon: "mdi-sort-ascending",
+        tooltip: "按时间升序排列",
+        handler: () => handleClickSort(true)
+      },
+      {
+        icon: "mdi-reply",
+        tooltip: "回复此树洞",
+        handler: () => handleClickReply()
+      }
+    ]
+})
+
+watch(actions, (newVal) => {
+  emit('modifyactions', newVal)
+})
+
+function generateSortedData() {
+  if (!isAscending.value) return [...view_data.value.posts].sort((a, b) => b.id - a.id)
+  else return [...view_data.value.posts].sort((a, b) => a.id - b.id)
+}
+
 function initial(id) {
   emit('modifytitle', '树洞详细 #' + id)
   emit('modifyicon', {
@@ -30,13 +69,11 @@ function initial(id) {
     tooltip: "返回主页",
     handler: handleClickAppbarIcon
   })
-  emit('modifyactions', [
-    {
-      icon: "mdi-reply",
-      tooltip: "回复此树洞",
-      handler: () => handleClickReply()
-    }
-  ])
+  emit('modifyactions', actions.value)
+}
+
+function handleClickSort(value) {
+  isAscending.value = value
 }
 
 function handleClickReply(subId, poster_index) {
