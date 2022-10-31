@@ -103,7 +103,7 @@ function initial(id, subId) {
     if (getQueryVariable("poster_index") !== undefined) {
       content.value = "回复 " + fullId + "：@" + getFullPosterNameByIndex(getQueryVariable("poster_index")) + " " + content.value
       // remove parameter of the url
-      history.replaceState(null, null, "/reply/" + id + "/" + subId)
+      history.replaceState(history.state, '', "/reply/" + id + "/" + subId)
     }
   } else {
     checkUserLogin("/reply/" + id)

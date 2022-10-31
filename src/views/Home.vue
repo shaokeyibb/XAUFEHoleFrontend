@@ -74,7 +74,7 @@ onActivated(() => {
     snackbar.enable = true
     snackbar.text = decodeURIComponent(getQueryVariable("snakebar"))
     // remove parameter of the url
-    history.replaceState(null, null, location.pathname)
+    history.replaceState(history.state, '', location.pathname)
   }
   timer = setInterval(() => {
     if (!isInViewport(document.getElementById("no-more-post"))) return;
