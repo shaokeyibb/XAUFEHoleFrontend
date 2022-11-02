@@ -1,4 +1,11 @@
 <template>
+  <div v-for="data in topPosts">
+    <preview-card :id="'post_'+data.id" :data="data"></preview-card>
+    <v-spacer class="mb-3"></v-spacer>
+  </div>
+  <template v-if="topPosts && topPosts.length > 0">
+    <v-divider class="mx-3 my-4" style="size: 16px"></v-divider>
+  </template>
   <div v-for="data in preview_data">
     <preview-card :data="data" :id="'post_'+data.id"></preview-card>
     <v-spacer class="mb-3"></v-spacer>
@@ -144,6 +151,8 @@ watch(current_page_data, (newVal) => {
     isLoading.value = false
   }
 })
+
+const [topPosts] = useAsyncComputed(() => fetchX(backendApiUrl + "/post/top").then(res => res.json()), undefined)
 
 </script>
 

@@ -10,17 +10,27 @@
             :color="secondary"
             label="将这篇树洞标记为 NSFW"
             messages="是否将这篇树洞标记为“不适宜在工作期间查看（NSFW）”？这将使得这篇树洞在首页不会显示文章预览，且其他人必须登录后才能查看该树洞。"
-  ></v-switch>
+  />
+  <v-switch v-if="isAdmin" v-model="isTop"
+            :color="secondary"
+            :disabled="isSending"
+            label="将这篇树洞标记为置顶"
+            messages="一篇置顶树洞将被始终显示在主页顶部，该选项仅管理员可用。"
+  />
 </template>
 
 <script setup>
 import Editor from "../components/create/Editor.vue";
-import {onMounted, ref, watch} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import {useRouter} from "vue-router";
 import TagSelector from "../components/create/TagSelector.vue";
 import {checkUserLogin, fetchX} from "../service/frontend.ts";
 import {backendApiUrl} from "../configurations/config.ts";
 import {secondary} from "../themes/color.js";
+import {useUserInfoStore} from "../stores/userInfo.js";
+
+const userInfoStore = useUserInfoStore()
+const isAdmin = computed(() => userInfoStore.isAdmin)
 
 const router = useRouter()
 const isSending = ref(false)
@@ -31,6 +41,7 @@ const content = ref("")
 const selectedTags = ref([])
 
 const isNSFW = ref(false)
+const isTop = ref(false)
 
 const showImageUploader = ref(false)
 
@@ -66,7 +77,7 @@ function handleClickLaunchBtn() {
     body: JSON.stringify({
       content: content.value,
       tags: selectedTags.value,
-      attributes: [].concat(isNSFW.value ? ["NSFW"] : [])
+      attributes: [].concat(isNSFW.value ? ["NSFW"] : []).concat(isTop.value ? ["Top"] : [])
     }),
     headers: {
       "Content-Type": "application/json"
