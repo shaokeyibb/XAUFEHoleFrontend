@@ -23,6 +23,15 @@
       </v-container>
     </v-main>
     <foot-bar></foot-bar>
+    <fab-btn icon="mdi-download" color="#4CAF50" size="x-large" :position="{bottom:'96px',right:'16px'}"
+             @click="handleClickPWAButton" v-show="doShowPWAButton">
+      <v-icon size="large"></v-icon>
+      <v-tooltip
+          activator="parent"
+          location="start"
+      >安装应用
+      </v-tooltip>
+    </fab-btn>
   </v-app>
 </template>
 
@@ -31,6 +40,7 @@ import {primary, secondary, textLight, textDark, error, unimportant} from './the
 import FootBar from "./components/FootBar.vue";
 import AppBar from "./components/AppBar.vue";
 import {ref} from "vue";
+import FabBtn from "./components/FabBtn.vue";
 
 const title = ref("XAUFEHole - 西财树洞")
 const icon = ref(undefined)
@@ -61,6 +71,29 @@ function handleClickBannerDismiss() {
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker
       .register('/serviceWorker.js')
+}
+
+const doShowPWAButton = ref(false)
+
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  doShowPWAButton.value = true
+});
+
+function handleClickPWAButton() {
+  doShowPWAButton.value = false
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then((choiceResult) => {
+    if (choiceResult.outcome === 'accepted') {
+      console.log('User accepted the A2HS prompt');
+    } else {
+      console.log('User dismissed the A2HS prompt');
+    }
+    deferredPrompt = null;
+  });
 }
 
 </script>

@@ -8,6 +8,7 @@
     <v-divider class="mx-16 my-4" style="size: 16px"></v-divider>
   </div>
   <fab-btn icon="mdi-plus" :color="secondary" size="x-large" @click="handleClickFabBtn">
+    <v-icon size="large"></v-icon>
     <v-tooltip
         activator="parent"
         location="start"

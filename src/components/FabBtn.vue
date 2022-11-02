@@ -1,9 +1,13 @@
 <template>
-  <v-btn class="fab" :icon="icon" :color="color+80" :size="size" @click="handleClick"></v-btn>
+  <v-btn class="fab" :icon="icon" :color="color+80" :size="size" @click="handleClick">
+    <slot></slot>
+  </v-btn>
 </template>
 
 <script setup>
-defineProps({
+import {computed} from "vue";
+
+const props = defineProps({
   icon: {
     type: String,
     required: false,
@@ -18,8 +22,20 @@ defineProps({
     type: String,
     required: false,
     default: "normal"
-  }
+  },
+  position: {
+    type: Object,
+    required: false,
+    default: {
+      bottom: "16px",
+      right: "16px"
+    }
+  },
 })
+
+const bottom = computed(() => props.position.bottom)
+const right = computed(() => props.position.right)
+
 const emit = defineEmits(['click'])
 
 const handleClick = () => {
@@ -30,8 +46,8 @@ const handleClick = () => {
 <style scoped>
 .fab {
   position: fixed;
-  bottom: 16px;
-  right: 16px;
+  bottom: v-bind(bottom);
+  right: v-bind(right);
   z-index: 9999;
 }
 </style>
