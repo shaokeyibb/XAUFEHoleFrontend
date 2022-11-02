@@ -247,11 +247,12 @@ function handleClickLogin() {
     }).then(res => {
       if (res.status === 200) {
         refreshCaptcha("captcha");
-        router.push(
-            (getQueryVariable("redirect") ? decodeURIComponent(getQueryVariable("redirect")) : "/") +
-            (getQueryVariable("redirect") ? "" : "?snakebar=" + encodeURIComponent("登录成功，欢迎回来！"))
-        )
-        userInfoStore.updateUserInfoForce()
+        userInfoStore.updateUserInfoForce().then(() => {
+          router.push(
+              (getQueryVariable("redirect") ? decodeURIComponent(getQueryVariable("redirect")) : "/") +
+              (getQueryVariable("redirect") ? "" : "?snakebar=" + encodeURIComponent("登录成功，欢迎回来！"))
+          )
+        });
       } else if (res.status === 202) {
         requireRegistrationCode.value = true
         throw new Error("我们已将一封验证邮件发送到你的邮箱中，请查看后在本界面中输入验证码以完成登录。");
