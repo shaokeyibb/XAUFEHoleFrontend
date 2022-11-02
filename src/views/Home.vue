@@ -24,9 +24,9 @@
 </template>
 
 <script setup>
-import {secondary, unimportant} from '../themes/color.js'
+import {secondary, unimportant, background} from '../themes/color.js'
 import FabBtn from "../components/FabBtn.vue";
-import {onActivated, onDeactivated, onMounted, onUnmounted, reactive, ref, watch} from "vue";
+import {onActivated, onDeactivated, reactive, ref, watch} from "vue";
 import {getQueryVariable, isInViewport} from "../utils/frontend.js";
 import useAsyncComputed from "../utils/use-async-computed.ts";
 import {fetchX} from "../service/frontend.ts";
@@ -156,6 +156,6 @@ watch(current_page_data, (newVal) => {
   transform: translate(-50%, 25%);
   font-size: 14px;
   color: v-bind(unimportant);
-  background-color: white;
+  background-color: v-bind(background);
 }
 </style>
