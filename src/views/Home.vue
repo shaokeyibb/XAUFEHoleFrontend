@@ -7,7 +7,13 @@
     <span class="no-more-post-content">已经到底了噢</span>
     <v-divider class="mx-16 my-4" style="size: 16px"></v-divider>
   </div>
-  <fab-btn icon="mdi-plus" :color="secondary" size="x-large" @click="handleClickFabBtn"></fab-btn>
+  <fab-btn icon="mdi-plus" :color="secondary" size="x-large" @click="handleClickFabBtn">
+    <v-tooltip
+        activator="parent"
+        location="start"
+    >发布树洞
+    </v-tooltip>
+  </fab-btn>
   <v-snackbar style="z-index: 9999" v-model="snackbar.enable">
     {{ snackbar.text }}
 
