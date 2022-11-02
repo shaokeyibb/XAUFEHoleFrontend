@@ -31,17 +31,19 @@
 </template>
 
 <script setup>
-import {secondary, unimportant, background} from '../themes/color.js'
+import {background, secondary, unimportant} from '../themes/color.js'
 import FabBtn from "../components/FabBtn.vue";
-import {onActivated, onDeactivated, reactive, ref, watch} from "vue";
+import {computed, onActivated, onDeactivated, reactive, ref, watch} from "vue";
 import {getQueryVariable, isInViewport} from "../utils/frontend.js";
 import useAsyncComputed from "../utils/use-async-computed.ts";
 import {fetchX} from "../service/frontend.ts";
 import {backendApiUrl} from "../configurations/config.ts";
 import PreviewCard from "../components/home/PreviewCard.vue";
 import {useRouter} from "vue-router";
+import {useUserInfoStore} from "../stores/userInfo.js";
 
 const router = useRouter();
+const userInfoStore = useUserInfoStore()
 
 function handleClickAccountBtn() {
   router.push('/login')
@@ -58,12 +60,7 @@ const snackbar = reactive({
   text: ""
 })
 
-const [isUserLogin] = useAsyncComputed(() => {
-  return fetchX(backendApiUrl + "/user/info", null, true)
-      .then(res => res.json())
-      .then(res => res.id !== undefined)
-      .catch(() => false)
-}, false)
+const isUserLogin = computed(() => userInfoStore.hasLogin)
 
 let timer
 
@@ -90,7 +87,9 @@ onActivated(() => {
     isLoading.value = true
     page.value = page.value + 1
   }, 200)
-  checkUserLogin(isUserLogin.value)
+  userInfoStore.injectUserInfo().then(() => {
+    checkUserLogin(isUserLogin.value)
+  })
 })
 
 onDeactivated(() => {

@@ -10,8 +10,10 @@ import {fetchX} from "../service/frontend.ts";
 import {backendApiUrl} from "../configurations/config.ts";
 import {useRouter} from "vue-router";
 import {onMounted} from "vue";
+import {useUserInfoStore} from "../stores/userInfo";
 
 const router = useRouter()
+const userInfoStore = useUserInfoStore()
 
 function handleClickLogout() {
   fetchX(backendApiUrl + "/auth/logout", {
@@ -21,6 +23,7 @@ function handleClickLogout() {
       router.push("/?snakebar=退出登录成功")
     }
   })
+  userInfoStore.logout()
 }
 
 const emit = defineEmits(['modifytitle', 'modifyicon', 'modifyactions'])
