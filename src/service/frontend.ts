@@ -1,6 +1,6 @@
 import router from '../plugins/vuerouter.js'
 import {nextTick} from "vue";
-import {useUserInfoStore} from '../stores/userInfo.js'
+import {useUserInfoStore} from '../stores/userInfo.js';
 
 function handleResponseBody(response: Response) {
     switch (response.status) {
@@ -13,6 +13,7 @@ function handleResponseBody(response: Response) {
             break
         }
         case 401: {
+            useUserInfoStore().logout()
             router.push("/login")
             break
         }
