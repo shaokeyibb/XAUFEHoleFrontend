@@ -88,9 +88,7 @@ onActivated(() => {
     isLoading.value = true
     page.value = page.value + 1
   }, 200)
-  userInfoStore.injectUserInfo().then(() => {
-    checkUserLogin(isUserLogin.value)
-  })
+  checkUserLogin(isUserLogin.value)
 })
 
 onDeactivated(() => {

@@ -36,11 +36,12 @@
 </template>
 
 <script setup>
-import {primary, secondary, textLight, textDark, error, unimportant} from './themes/color.js'
+import {error, primary, secondary, textDark, textLight, unimportant} from './themes/color.js'
 import FootBar from "./components/FootBar.vue";
 import AppBar from "./components/AppBar.vue";
 import {ref} from "vue";
 import FabBtn from "./components/FabBtn.vue";
+import {useUserInfoStore} from "./stores/userInfo.js";
 
 const title = ref("XAUFEHole - 西财树洞")
 const icon = ref(undefined)
@@ -65,6 +66,9 @@ function handleClickBannerDismiss() {
   hasReadCookieNotice.value = true
   localStorage.setItem("hasReadCookieNotice", "true")
 }
+
+const userInfoStore = useUserInfoStore();
+userInfoStore.updateUserInfo()
 
 // For PWA
 

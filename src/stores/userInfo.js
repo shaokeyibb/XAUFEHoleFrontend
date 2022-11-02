@@ -6,17 +6,23 @@ import {computed, ref} from "vue";
 export const useUserInfoStore = defineStore('user', () => {
     const info = ref(undefined)
 
-    const hasLogin = computed(() => info.value !== undefined)
+    const hasLogin = computed(() => info.value !== null)
 
-    async function injectUserInfo() {
+    async function updateUserInfoForce() {
         info.value = await fetchX(backendApiUrl + "/user/info", null, true)
             .then(res => res.json())
-            .catch(() => info.value = undefined)
+            .catch(() => info.value = null)
+    }
+
+    async function updateUserInfo() {
+        if (info.value === undefined) {
+            await updateUserInfoForce()
+        }
     }
 
     function logout() {
-        info.value = undefined
+        info.value = null
     }
 
-    return {info, hasLogin, logout, injectUserInfo}
+    return {info, hasLogin, logout, updateUserInfo, updateUserInfoForce}
 })
