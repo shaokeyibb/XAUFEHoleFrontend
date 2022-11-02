@@ -24,7 +24,7 @@
     </v-main>
     <foot-bar></foot-bar>
     <fab-btn icon="mdi-download" color="#4CAF50" size="x-large" :position="{bottom:'96px',right:'16px'}"
-             @click="handleClickPWAButton" v-show="doShowPWAButton">
+             @click="handleClickPWAButton" v-if="doShowPWAButton">
       <v-icon size="large"></v-icon>
       <v-tooltip
           activator="parent"
@@ -84,10 +84,10 @@ window.addEventListener('beforeinstallprompt', (e) => {
 });
 
 function handleClickPWAButton() {
-  doShowPWAButton.value = false
   deferredPrompt.prompt();
   deferredPrompt.userChoice.then((choiceResult) => {
     if (choiceResult.outcome === 'accepted') {
+      doShowPWAButton.value = false
       console.log('User accepted the A2HS prompt');
     } else {
       console.log('User dismissed the A2HS prompt');
