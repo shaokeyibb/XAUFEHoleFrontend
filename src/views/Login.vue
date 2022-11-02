@@ -59,7 +59,7 @@
 
 <script setup>
 import {computed, onMounted, reactive, ref, watch} from "vue";
-import {backendApiUrl, frontendUrl} from "../configurations/config.ts";
+import {backendApiUrl} from "../configurations/config.ts";
 import {primary, secondary} from "../themes/color.js";
 import useAsyncComputed from "../utils/use-async-computed.ts";
 import {fetchX} from "../service/frontend.ts";
@@ -91,6 +91,8 @@ const selectedMethod = computed(() => {
 const appliedAdditionalParams = reactive({})
 
 const requireRegistrationCode = ref(false)
+
+const requireCaptcha = computed(() => appliedAdditionalParams['registerMode'] !== false)
 
 const authMethods = [
   // {
@@ -193,7 +195,7 @@ const authMethods = [
         name: "captcha",
         captcha: true,
         captchaUrl: backendApiUrl + "/captcha/generate",
-        required: ref(true),
+        required: requireCaptcha,
         default: undefined,
         label: "验证码",
         detail: "请正确输入下方的验证码"
