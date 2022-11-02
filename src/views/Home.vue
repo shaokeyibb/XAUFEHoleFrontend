@@ -12,6 +12,7 @@
     <v-tooltip
         activator="parent"
         location="start"
+        :attach="true"
     >发布树洞
     </v-tooltip>
   </fab-btn>
