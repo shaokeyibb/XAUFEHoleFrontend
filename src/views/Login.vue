@@ -65,8 +65,10 @@ import useAsyncComputed from "../utils/use-async-computed.ts";
 import {fetchX} from "../service/frontend.ts";
 import {useRouter} from "vue-router";
 import {getQueryVariable} from "../utils/frontend.js";
+import {useUserInfoStore} from "../stores/userInfo.js";
 
 const router = useRouter();
+const userInfoStore = useUserInfoStore();
 
 const emit = defineEmits(['modifytitle', 'modifyicon', 'modifyactions'])
 
@@ -249,6 +251,7 @@ function handleClickLogin() {
             (getQueryVariable("redirect") ? decodeURIComponent(getQueryVariable("redirect")) : "/") +
             (getQueryVariable("redirect") ? "" : "?snakebar=" + encodeURIComponent("登录成功，欢迎回来！"))
         )
+        userInfoStore.updateUserInfoForce()
       } else if (res.status === 202) {
         requireRegistrationCode.value = true
         throw new Error("我们已将一封验证邮件发送到你的邮箱中，请查看后在本界面中输入验证码以完成登录。");

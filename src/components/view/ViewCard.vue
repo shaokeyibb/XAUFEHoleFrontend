@@ -12,7 +12,13 @@
         </div>
         <v-spacer class="my-3"></v-spacer>
       </v-card-title>
-      <h3 class="theme-primary">@{{ getFullPosterNameByIndex(data.poster_index) }}</h3>
+      <h3 class="theme-primary">
+        @{{ getFullPosterNameByIndex(data.poster_index) }}
+        <template v-if="isAdmin">（{{
+            data.profile.studentID > 0 ? data.profile.studentID : ''
+          }}{{ data.profile.email ? data.profile.email : '' }}）
+        </template>
+      </h3>
       <div class="card_content overflow-auto">
         <vue-showdown :markdown="data.content"></vue-showdown>
       </div>
@@ -49,6 +55,10 @@ import {computed, ref} from "vue";
 import MediaWrapper from "./MediaWrapper.vue";
 import {fetchX} from "../../service/frontend.ts";
 import {backendApiUrl} from "../../configurations/config.ts";
+import {useUserInfoStore} from "../../stores/userInfo.js";
+
+const userInfoStore = useUserInfoStore();
+const isAdmin = computed(() => userInfoStore.isAdmin);
 
 const readableTimePrefix = computed(() => {
   if (props.data.id < 1) {

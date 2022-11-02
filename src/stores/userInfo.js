@@ -8,6 +8,8 @@ export const useUserInfoStore = defineStore('user', () => {
 
     const hasLogin = computed(() => info.value !== null)
 
+    const isAdmin = computed(() => info.value && info.value.roles.indexOf('admin') !== -1)
+
     async function updateUserInfoForce() {
         info.value = await fetchX(backendApiUrl + "/user/info", null, true)
             .then(res => res.json())
@@ -24,5 +26,5 @@ export const useUserInfoStore = defineStore('user', () => {
         info.value = null
     }
 
-    return {info, hasLogin, logout, updateUserInfo, updateUserInfoForce}
+    return {info, hasLogin, logout, updateUserInfo, updateUserInfoForce, isAdmin}
 })
